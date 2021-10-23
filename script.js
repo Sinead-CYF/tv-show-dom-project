@@ -1,12 +1,66 @@
-//You can edit ALL of the code here
-function setup() {
-  const allEpisodes = getAllEpisodes();
-  makePageForEpisodes(allEpisodes);
-}
+//GLOBAL ELEMENTS
+const body = document.querySelector("body");
+body.classList.add("body");
+
+//PAGE TITLE
+const titleWrap = document.createElement("div");
+titleWrap.classList.add("title-wrapper");
+const header = document.createElement("h1");
+header.innerText = "TV DOM Project";
+body.appendChild(titleWrap);
+titleWrap.appendChild(header);
 
 function makePageForEpisodes(episodeList) {
-  const rootElem = document.getElementById("root");
-  rootElem.textContent = `Got ${episodeList.length} episode(s)`;
+  //EPISODE COUNT BANNER
+  const episodeCountWrap = document.createElement("div");
+  episodeCountWrap.classList.add("episode-count-wrapper");
+  const episodeCountPara = document.createElement("p");
+  episodeCountPara.textContent = `${episodeList.length} episode(s)`;
+  body.appendChild(episodeCountWrap);
+  episodeCountWrap.appendChild(episodeCountPara);
+
+  //TILE-AREA WRAPPER
+  const cardsWrapper = document.createElement("div");
+  body.appendChild(cardsWrapper);
+  cardsWrapper.classList.add("cards-wrapper");
+
+  episodeList.forEach(episode => {
+
+  //CREATING AN EPISODE CARD
+  const card = document.createElement("div");
+  card.classList.add("card");
+  cardsWrapper.appendChild(card);
+
+  //CARD IMG WRAPPER
+  const imgWrapper = document.createElement("div");
+  imgWrapper.classList.add("img-wrapper");
+  card.appendChild(imgWrapper);
+
+  //IMAGES
+  const images = document.createElement("img");
+  images.classList.add("images");
+  images.src = episode.image.medium;
+  imgWrapper.appendChild(images);
+
+  //CARD HEADER
+  const cardHeader = document.createElement("h2");
+  cardHeader.classList.add("card-header");
+  cardHeader.textContent = `${episode.name} - S1E12`;
+  card.appendChild(cardHeader);
+
+  //CARD PARAGRAPH
+  const cardParagraph = document.createElement("div");
+  cardParagraph.classList.add("card-paragraph-wrapper");
+  cardParagraph.innerHTML = episode.summary;
+  card.appendChild(cardParagraph);
+  });
+
+  
+}
+
+function setup() {
+  const allEpisodes = getAllEpisodes(); //all episodes array
+  makePageForEpisodes(allEpisodes);
 }
 
 window.onload = setup;
