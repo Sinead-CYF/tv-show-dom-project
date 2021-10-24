@@ -27,7 +27,7 @@
 .episode-count-wrapper {
   width: 90%;
   text-align: center;
-  margin: 1rem auto;
+  margin: 0.5rem auto;
 }
 
 .episode-count-para {
@@ -36,11 +36,18 @@
   font-size: 4em;
 }
 
+.tv-maze-wrapper {
+  margin: 0 auto;
+  width: 90%;
+  display: flex;
+  justify-content: center;
+}
+
 .tv-maze-link {
   text-decoration: none;
   color: darkgrey;
   position: relative;
-  padding: 00.2rem;
+  padding: 00.2rem; 
 }
 
 .tv-maze-link::after {
@@ -62,20 +69,16 @@
 }
 
 .search-bar-wrapper {
+  display: flex;
+  justify-content: center;
   width: 90%;
   height: 2rem;
-  background-color: hotpink;
-  margin: 1rem auto;
-}
-
-
-.form {
-  background-color: yellow;
+  margin: 0.5rem auto;
 }
 
 .search-input {
   padding: 0.5rem;
-  width: 30%;
+  width: 50%;
   border-radius: 3px;
 }
 
@@ -84,7 +87,6 @@
   flex-wrap: wrap;
   justify-content: space-around;
   margin: 0 auto;
-  margin-top: 1rem;
   height: auto;
   width: 90%;
   background-color: #ecf0f1;
@@ -127,7 +129,7 @@
 }
 
 .card-paragraph-wrapper {
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   font-family: var(--secondary-font);
   font-weight: bolder;
   width: 95%;
