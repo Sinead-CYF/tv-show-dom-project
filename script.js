@@ -72,7 +72,7 @@ function makePageForEpisodes(episodeList) {
     card.appendChild(cardHeader);
 
     //CARD PARAGRAPH
-    const cardParagraph = document.createElement("div");
+    const cardParagraph = document.createElement("p");
     cardParagraph.classList.add("card-paragraph-wrapper");
     cardParagraph.innerHTML = episode.summary;
     card.appendChild(cardParagraph);
@@ -106,7 +106,7 @@ S2E7 would be incorrect. -- DONE
 
 Your page should state somewhere that the data has 
 (originally) come from TVMaze.com, and link back to that site 
-(or the specific episode on that site). See tvmaze.com/api#licensing. 
+(or the specific episode on that site). See tvmaze.com/api#licensing. -- DONE
 
 *****************************************************************************************
 

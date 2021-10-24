@@ -17,14 +17,14 @@
 }
 
 .title-wrapper {
-  width: 85%;
+  width: 90%;
   margin: 0 auto;
   text-align: center;
   background-color: rgb(218, 197, 238);
 }
 
 .episode-count-wrapper {
-  width: 85%;
+  width: 90%;
   text-align: center;
   margin: 1rem auto;
 }
@@ -50,7 +50,6 @@
   width: 100%;
   height: 2px;
   background-color: darkorchid;
-
   transform: scaleX(0);
   transform-origin: right;
   transition: transform 300ms ease-in;
@@ -74,7 +73,8 @@
 }
 
 .card {
-  width: 28%;
+  height:  auto;
+  width: 23%;
   min-width: 240px;
   margin-bottom: 2rem;
   border-radius: 4px;
@@ -89,7 +89,7 @@
 }
 
 .img-wrapper {
-  height: 40%;
+  height: 10rem;
   border-radius: 4px;
 }
 
