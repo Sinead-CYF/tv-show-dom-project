@@ -23,6 +23,7 @@
   background-color: rgb(218, 197, 238);
 }
 
+
 .episode-count-wrapper {
   width: 90%;
   text-align: center;
@@ -60,6 +61,24 @@
   transform-origin: left;
 }
 
+.search-bar-wrapper {
+  width: 90%;
+  height: 2rem;
+  background-color: hotpink;
+  margin: 1rem auto;
+}
+
+
+.form {
+  background-color: yellow;
+}
+
+.search-input {
+  padding: 0.5rem;
+  width: 30%;
+  border-radius: 3px;
+}
+
 .cards-wrapper {
   display: flex;
   flex-wrap: wrap;
@@ -67,7 +86,7 @@
   margin: 0 auto;
   margin-top: 1rem;
   height: auto;
-  width: 85%;
+  width: 90%;
   background-color: #ecf0f1;
   padding: 1.5rem;
 }

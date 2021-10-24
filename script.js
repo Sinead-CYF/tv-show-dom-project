@@ -1,6 +1,7 @@
 //GLOBAL ELEMENTS
 const body = document.querySelector("body");
 body.classList.add("body");
+const allEpisodes = getAllEpisodes();
 
 //PAGE TITLE
 const titleWrap = document.createElement("div");
@@ -11,24 +12,48 @@ body.appendChild(titleWrap);
 titleWrap.appendChild(header);
 
 function makePageForEpisodes(episodeList) {
-
   //EPISODE COUNT WRAPPER
   const episodeCountWrap = document.createElement("div");
   episodeCountWrap.classList.add("episode-count-wrapper");
   body.appendChild(episodeCountWrap);
 
-  //EPISODE COUNT PARAGRAPH 
+  //EPISODE COUNT PARAGRAPH
   const episodeCountPara = document.createElement("p");
   episodeCountPara.classList.add("episode-count-para");
-  episodeCountPara.innerHTML= `${episodeList.length} Episodes`;
+  episodeCountPara.innerHTML = `${episodeList.length} Episodes`;
   episodeCountWrap.appendChild(episodeCountPara);
 
-  //TV-MAZE LINK 
+  //TV-MAZE LINK
   const tvMazeLink = document.createElement("a");
   tvMazeLink.classList.add("tv-maze-link");
-  tvMazeLink.innerHTML = "SOURCED FROM TV-MAZE.COM"
+  tvMazeLink.innerHTML = "SOURCED FROM TV-MAZE.COM";
   tvMazeLink.href = "https://www.tvmaze.com";
   episodeCountWrap.appendChild(tvMazeLink);
+
+  //SEARCH BAR WRAPPER
+  const searchBarWrapper = document.createElement("section");
+  searchBarWrapper.classList.add("search-bar-wrapper");
+  body.appendChild(searchBarWrapper);
+
+  //SEARCH INPUT
+  const searchInput = document.createElement("input");
+  searchInput.classList.add("search-input");
+  searchInput.type = "text";
+  searchInput.setAttribute("placeholder", "Search");
+  searchInput.setAttribute("Name", "searchBar");
+  searchBarWrapper.appendChild(searchInput);
+
+  //ADD EVENT LISTENER TO SEARCH BAR
+  searchInput.addEventListener("keyup", (e) => {
+    const searchValue = e.target.value;
+    const filteredEpisodes = allEpisodes.filter((episode) => {
+      return (
+        episode.name.includes(searchValue) ||
+        episode.summary.includes(searchValue)
+      );
+    });
+    makePageForEpisodes(filteredEpisodes);
+  });
 
   //TILE-AREA WRAPPER
   const cardsWrapper = document.createElement("div");
@@ -55,13 +80,13 @@ function makePageForEpisodes(episodeList) {
     //CAPTURING SEASON & EPISODE DETAILS
     let seasonNum = episode.season;
     let episodeNum = episode.number;
-    
+
     //ZERO-PADDING NUMBERS
-    if(seasonNum < 10){
+    if (seasonNum < 10) {
       seasonNum = `0${seasonNum}`;
     }
 
-    if (episodeNum < 10){
+    if (episodeNum < 10) {
       episodeNum = `0${episodeNum}`;
     }
 
@@ -118,6 +143,8 @@ The search should be case-insensitive
 The display should update immediately after each keystroke changes the input.
 Display how many episodes match the current search
 If the search box is cleared, all episodes should be shown.
+
+*** NO IDEA WHAT ANY OF THIS MEANS ****
 If you have been fetching the episode data from the API, 
 be careful not to cause many frequent requests with this search feature. 
 The search should look through an in-memory copy of the episode list. 
@@ -127,7 +154,6 @@ Do not fetch the data again each time something is typed!
 
 *** Level 300 - add an Episode Selector: ***
 
-Complete all requirements from level 200
 Add a select input which allows you to jump quickly to an episode:
 The select input should list all episodes in the format: "S01E01 - Winter is Coming"
 When the user makes a selection, they should be taken directly to that episode in the list
