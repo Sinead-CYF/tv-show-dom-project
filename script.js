@@ -4,8 +4,7 @@ body.classList.add("body");
 const searchInput = document.createElement("input");
 const allEpisodes = getAllEpisodes();
 
-function createTitle() {
-  //PAGE TITLE
+function projectTitle() {
   const titleWrap = document.createElement("div");
   titleWrap.classList.add("title-wrapper");
   const header = document.createElement("h1");
@@ -14,31 +13,53 @@ function createTitle() {
   titleWrap.appendChild(header);
 }
 
-function episodeCounter(allEpisodes) {
-  //EPISODE COUNT WRAPPER
-  const episodeCountWrap = document.createElement("div");
-  episodeCountWrap.classList.add("episode-count-wrapper");
-  body.appendChild(episodeCountWrap);
+function showTitle(allEpisodes) {
+  //SHOW TITLE WRAPPER
+  const showTitleWrapper = document.createElement("div");
+  showTitleWrapper.classList.add("show-title-wrapper");
+  body.appendChild(showTitleWrapper);
 
-  //EPISODE COUNT PARAGRAPH
-  const episodeCountPara = document.createElement("p");
-  episodeCountPara.classList.add("episode-count-para");
-  episodeCountPara.innerHTML = `${allEpisodes.length} Episodes`;
-  episodeCountWrap.appendChild(episodeCountPara);
+  //SHOW TITLE TEXT
+  const showTitle = document.createElement("h1");
+  showTitle.classList.add("show-title");
+  showTitle.textContent = `Game of Thrones`;
+  showTitleWrapper.appendChild(showTitle);
 }
 
-function createSearchBar() {
+function createSearchArea() {
   //SEARCH BAR WRAPPER
   const searchBarWrapper = document.createElement("section");
   searchBarWrapper.classList.add("search-bar-wrapper");
   body.appendChild(searchBarWrapper);
+
+  //SELECT DROP DOWN OPTIONS
+  const dropdownWrapper = document.createElement("form");
+  dropdownWrapper.classList.add("dropdown-form");
+  const dropdownSelection = document.createElement("select");
+  dropdownSelection.classList.add("dropdown-selector");
+  dropdownSelection.setAttribute("name", "dropdown-selection");
+  dropdownSelection.setAttribute("label", "select-episode");
+  searchBarWrapper.appendChild(dropdownWrapper);
+  dropdownWrapper.appendChild(dropdownSelection);
+
+  allEpisodes.forEach((episode) => {});
 
   //SEARCH INPUT
   searchInput.classList.add("search-input");
   searchInput.type = "text";
   searchInput.setAttribute("placeholder", "Search");
   searchInput.setAttribute("Name", "searchBar");
+  searchInput.setAttribute("label", "search-episodes");
   searchBarWrapper.appendChild(searchInput);
+
+  //EPISODE COUNT DISPLAY
+  const counterWrapper = document.createElement("div");
+  counterWrapper.classList.add("counter-wrapper");
+  const countH2 = document.createElement("h2");
+  countH2.classList.add("counter-heading");
+  countH2.textContent = `${allEpisodes.length} Episodes`;
+  counterWrapper.appendChild(countH2);
+  searchBarWrapper.appendChild(counterWrapper);
 }
 
 function createTvMazeLink() {
@@ -53,7 +74,6 @@ function createTvMazeLink() {
 }
 
 function displayEpisodeCards(episodeList) {
-
   //TILE-AREA WRAPPER
   const cardsWrapper = document.createElement("div");
   body.appendChild(cardsWrapper);
@@ -92,7 +112,7 @@ function displayEpisodeCards(episodeList) {
     //CARD HEADER
     const cardHeader = document.createElement("h2");
     cardHeader.classList.add("card-header");
-    cardHeader.textContent = `${episode.name} - S${seasonNum}${episodeNum}`;
+    cardHeader.textContent = `${episode.name} - S${seasonNum}E${episodeNum}`;
     card.appendChild(cardHeader);
 
     //CARD PARAGRAPH
@@ -112,16 +132,16 @@ searchInput.addEventListener("keyup", (e) => {
       episode.summary.includes(searchValue)
     );
   });
-  console.log(searchValue);
-  // makePageForEpisodes(filteredEpisodes);
+  // console.log(searchValue);
+  displayEpisodeCards(filteredEpisodes);
 });
 
 function setup() {
   const allEpisodes = getAllEpisodes();
-  createTitle();
-  episodeCounter(allEpisodes);
+  projectTitle();
+  showTitle(allEpisodes);
   createTvMazeLink();
-  createSearchBar();
+  createSearchArea();
   displayEpisodeCards(allEpisodes);
 }
 

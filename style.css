@@ -1,3 +1,4 @@
+/***** GLOBAL STYLES *****/
 *,
 *::before,
 *::after {
@@ -8,14 +9,15 @@
 
 :root {
   --main-heading: "Oswald", sans-serif;
-  --main-font: "Roboto Slab", serif;
-  --secondary-font: "Lato", sans-serif;
+  --main-font: "Rosarivo", serif;
+  --secondary-font: "Rosarivo", serif;
 }
 
 .body {
   background-color: white;
 }
 
+/***** PROJECT TITLE *****/
 .title-wrapper {
   width: 90%;
   margin: 0 auto;
@@ -23,19 +25,20 @@
   background-color: rgb(218, 197, 238);
 }
 
-
-.episode-count-wrapper {
+/***** SHOW TITLE *****/
+.show-title-wrapper {
   width: 90%;
   text-align: center;
   margin: 0.5rem auto;
 }
 
-.episode-count-para {
-  margin-bottom: 1rem;
+.show-title {
+  margin-bottom: 0.5rem;
   font-family: var(--main-heading);
   font-size: 4em;
 }
 
+/***** TV-MAZE LINK *****/
 .tv-maze-wrapper {
   margin: 0 auto;
   width: 90%;
@@ -47,7 +50,7 @@
   text-decoration: none;
   color: darkgrey;
   position: relative;
-  padding: 00.2rem; 
+  padding: 00.2rem;
 }
 
 .tv-maze-link::after {
@@ -68,20 +71,54 @@
   transform-origin: left;
 }
 
+/***** SEARCH AREA WRAPPER *****/
 .search-bar-wrapper {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
   width: 90%;
-  height: 2rem;
   margin: 0.5rem auto;
 }
 
-.search-input {
-  padding: 0.5rem;
-  width: 50%;
-  border-radius: 3px;
+/***** DROPDOWN SELECTION *****/
+.dropdown-form {
+  flex-grow: 1;
+  min-width: 360px;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
+.dropdown-selector {
+  width: 100%;
+  padding: 0.6em;
+  border-radius: 5px;
+  height: 2.4rem;
+}
+
+/***** SEARCH BAR *****/
+.search-input {
+  padding: 0.4rem;
+  flex-grow: 1;
+  min-width: 360px;
+  border-radius: 5px;
+  margin-bottom: 0.5rem;
+}
+
+/***** EPISODE COUNTER *****/
+.counter-wrapper {
+  flex-grow: 1;
+  min-width: 260px;
+  margin-bottom: 0.5rem;
+  margin-left: 0.5rem;
+  border: 1px solid black;
+}
+
+.counter-heading {
+  text-align: center;
+  font-family: var(--main-heading);
+}
+
+/***** CARDS WRAPPER *****/
 .cards-wrapper {
   display: flex;
   flex-wrap: wrap;
@@ -93,9 +130,10 @@
   padding: 1.5rem;
 }
 
+/***** CARDS *****/
 .card {
-  height:  auto;
-  width: 23%;
+  height: auto;
+  width: 21%;
   min-width: 240px;
   margin-bottom: 2rem;
   border-radius: 4px;
@@ -110,7 +148,7 @@
 }
 
 .img-wrapper {
-  height: 10rem;
+  height: 9rem;
   border-radius: 4px;
 }
 
@@ -124,6 +162,7 @@
   background-color: #f6f6f5;
   text-align: center;
   font-family: var(--main-font);
+  font-weight: bolder;
   border-bottom: 1px solid black;
   margin-bottom: 0.7rem;
 }
@@ -135,4 +174,17 @@
   width: 95%;
   margin: 0.2rem auto;
   text-align: center;
+}
+
+/***** MEDIA QUERIES *****/
+@media screen and (max-width: 600px) {
+  .body {
+    background-color: olive;
+  }
+}
+
+@media screen and (max-width: 760px) {
+  .dropdown-form {
+    margin-right: 0rem;
+  }
 }
