@@ -10,6 +10,7 @@ const options = document.createElement("option");
 const searchBarWrapper = document.createElement("section");
 const counterWrapper = document.createElement("div");
 const countH2 = document.createElement("h2");
+countH2.textContent = `${allEpisodes.length} Episodes`;
 
 // const count = allEpisodes.length;
 
@@ -179,17 +180,19 @@ dropdownSelection.addEventListener("click", (e) => {
   });
 
   if (dropdownSelection.value === "default") {
+    countH2.textContent = `73 / 73 Episodes`;  //why isn't this working  <<<<< 
+    console.log(countH2);
     displayEpisodeCards(allEpisodes);
   } else {
     displayEpisodeCards(displaySelected);
   }
+  countH2.textContent = `1 / 73 Episodes`;
 });
 
-function counterText(arr) {
-  countH2.textContent = `${arr.length} Episodes`;
+/***** EPISODE COUNT TEXT *****/
+function counterText(filtered) {
+  countH2.textContent = `${filtered.length} / 73 Episodes`;
 }
-
-counterText(allEpisodes);
 
 /***** ADD EVENT LISTENER TO SEARCH BAR *****/
 searchInput.addEventListener("input", (e) => {
@@ -213,7 +216,7 @@ function setup() {
   showTitle(allEpisodes);
   createTvMazeLink();
   createSearchArea();
-  // episodeCounter(allEpisodes);
+ 
   createCardsWrapper();
   displayEpisodeCards(allEpisodes);
 }
