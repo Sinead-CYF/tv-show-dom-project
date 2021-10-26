@@ -1,4 +1,5 @@
-//GLOBAL ELEMENTS
+/***** GLOBAL ELEMENTS *****/
+
 const body = document.querySelector("body");
 body.classList.add("body");
 const searchInput = document.createElement("input");
@@ -6,6 +7,8 @@ const allEpisodes = getAllEpisodes();
 const cardsWrapper = document.createElement("div");
 const dropdownSelection = document.createElement("select");
 const options = document.createElement("option");
+
+/***** PROJECT TITLE *****/
 
 function projectTitle() {
   const titleWrap = document.createElement("div");
@@ -15,6 +18,8 @@ function projectTitle() {
   body.appendChild(titleWrap);
   titleWrap.appendChild(header);
 }
+
+/***** SHOW TITLE *****/
 
 function showTitle() {
   //SHOW TITLE WRAPPER
@@ -28,6 +33,8 @@ function showTitle() {
   showTitle.textContent = `Game of Thrones`;
   showTitleWrapper.appendChild(showTitle);
 }
+
+/***** SEARCH AREA *****/
 
 function createSearchArea() {
   //SEARCH BAR WRAPPER
@@ -94,6 +101,8 @@ function createSearchArea() {
   searchBarWrapper.appendChild(counterWrapper);
 }
 
+/***** TV-MAZE LINK *****/
+
 function createTvMazeLink() {
   const tvMazeWrapper = document.createElement("div");
   tvMazeWrapper.classList.add("tv-maze-wrapper");
@@ -132,11 +141,14 @@ console.log(formatSeasonAndEpisode(allEpisodes));
 
 ******************************************************************************************************************/
 
-//TILE-AREA WRAPPER
+/***** TILE AREA WRAPPER *****/
+
 function createCardsWrapper() {
   body.appendChild(cardsWrapper);
   cardsWrapper.classList.add("cards-wrapper");
 }
+
+/***** DISPLAY EPISODE CARDS *****/
 
 function displayEpisodeCards(episodeList) {
   cardsWrapper.innerHTML = ""; //why is this needed when the wrapper is empty of content anyway?
@@ -186,27 +198,21 @@ function displayEpisodeCards(episodeList) {
   });
 }
 
-//ADD EVENT LISTENER TO DROPDOWN OPTIONS
+/***** ADD EVENT LISTENER TO DROPDOWN OPTIONS *****/
 dropdownSelection.addEventListener("click", (e) => {
   const selectedOption = dropdownSelection.value;
   const displaySelected = allEpisodes.filter((episode) => {
     return episode.name.includes(selectedOption);
   });
 
-  if (dropdownSelection.value === "default"){
+  if (dropdownSelection.value === "default") {
     displayEpisodeCards(allEpisodes);
   } else {
     displayEpisodeCards(displaySelected);
   }
-
-  // if (dropdownSelection.value === "default") {
-  //   displayEpisodeCards();
-  // } else {
-  //   displayEpisodeCards(displaySelected);
-  // }
 });
 
-//ADD EVENT LISTENER TO SEARCH BAR
+/***** ADD EVENT LISTENER TO SEARCH BAR *****/
 searchInput.addEventListener("input", (e) => {
   const searchValue = e.target.value;
   const filteredEpisodes = allEpisodes.filter((episode) => {
@@ -219,6 +225,7 @@ searchInput.addEventListener("input", (e) => {
   displayEpisodeCards(filteredEpisodes);
 });
 
+/***** ON SET UP *****/
 function setup() {
   const allEpisodes = getAllEpisodes();
   projectTitle();
@@ -232,45 +239,6 @@ function setup() {
 window.onload = setup;
 
 /****************************************************************************************
-
-*** Level 100 - minimal features: ***
-
-All episodes must be shown - DONE 
-For each episode, AT LEAST following must be displayed:
-
-the episode's name -- DONE
-the season number  --  DONE
-the episode number  -- DONE
-the episode's medium-sized image -- DONE
-the episode's summary text -- DONE
-
-You should combine season number and episode number into an episode code:
-Each part should be zero-padded to two digits.
-Example: S02E07 would be the code for the 7th episode of the 2nd season. 
-S2E7 would be incorrect. -- DONE
-
-Your page should state somewhere that the data has 
-(originally) come from TVMaze.com, and link back to that site 
-(or the specific episode on that site). See tvmaze.com/api#licensing. -- DONE
-
-*****************************************************************************************
-
-*** Level 200 - add Search:*** 
-
-Add a "live" search input:
-Only episodes whose summary OR name contains the search term should be displayed
-The search should be case-insensitive
-The display should update immediately after each keystroke changes the input.
-Display how many episodes match the current search
-If the search box is cleared, all episodes should be shown. - DONE 
-
-*** NO IDEA WHAT ANY OF THIS MEANS ****
-If you have been fetching the episode data from the API, 
-be careful not to cause many frequent requests with this search feature. 
-The search should look through an in-memory copy of the episode list. 
-Do not fetch the data again each time something is typed!
-
-*****************************************************************************************
 
 *** Level 300 - add an Episode Selector: ***
 
