@@ -3,6 +3,8 @@ const body = document.querySelector("body");
 body.classList.add("body");
 const searchInput = document.createElement("input");
 const allEpisodes = getAllEpisodes();
+const cardsWrapper = document.createElement("div");
+const dropdownSelection = document.createElement("select");
 
 function projectTitle() {
   const titleWrap = document.createElement("div");
@@ -35,14 +37,18 @@ function createSearchArea() {
   //SELECT DROP DOWN OPTIONS
   const dropdownWrapper = document.createElement("form");
   dropdownWrapper.classList.add("dropdown-form");
-  const dropdownSelection = document.createElement("select");
   dropdownSelection.classList.add("dropdown-selector");
   dropdownSelection.setAttribute("name", "dropdown-selection");
   dropdownSelection.setAttribute("label", "select-episode");
   searchBarWrapper.appendChild(dropdownWrapper);
   dropdownWrapper.appendChild(dropdownSelection);
 
-  allEpisodes.forEach((episode) => {});
+  //POPULATE OPTIONS FROM ARRAY
+  allEpisodes.forEach((episode) => {
+    const option = document.createElement("option");
+    option.setAttribute("label", `S01E01 - ${episode.name}`);
+    dropdownSelection.appendChild(option);
+  });
 
   //SEARCH INPUT
   searchInput.classList.add("search-input");
@@ -62,6 +68,7 @@ function createSearchArea() {
   searchBarWrapper.appendChild(counterWrapper);
 }
 
+
 function createTvMazeLink() {
   const tvMazeWrapper = document.createElement("div");
   tvMazeWrapper.classList.add("tv-maze-wrapper");
@@ -73,12 +80,14 @@ function createTvMazeLink() {
   tvMazeWrapper.appendChild(tvMazeLink);
 }
 
-function displayEpisodeCards(episodeList) {
+function createCardsWrapper() {
   //TILE-AREA WRAPPER
-  const cardsWrapper = document.createElement("div");
   body.appendChild(cardsWrapper);
   cardsWrapper.classList.add("cards-wrapper");
+}
 
+function displayEpisodeCards(episodeList) {
+  cardsWrapper.innerHTML = "";
   episodeList.forEach((episode) => {
     //CREATING AN EPISODE CARD
     const card = document.createElement("div");
@@ -124,7 +133,7 @@ function displayEpisodeCards(episodeList) {
 }
 
 //ADD EVENT LISTENER TO SEARCH BAR
-searchInput.addEventListener("keyup", (e) => {
+searchInput.addEventListener("input", (e) => {
   const searchValue = e.target.value;
   const filteredEpisodes = allEpisodes.filter((episode) => {
     return (
@@ -142,6 +151,7 @@ function setup() {
   showTitle(allEpisodes);
   createTvMazeLink();
   createSearchArea();
+  createCardsWrapper();
   displayEpisodeCards(allEpisodes);
 }
 
@@ -178,7 +188,7 @@ Only episodes whose summary OR name contains the search term should be displayed
 The search should be case-insensitive
 The display should update immediately after each keystroke changes the input.
 Display how many episodes match the current search
-If the search box is cleared, all episodes should be shown.
+If the search box is cleared, all episodes should be shown. - DONE 
 
 *** NO IDEA WHAT ANY OF THIS MEANS ****
 If you have been fetching the episode data from the API, 

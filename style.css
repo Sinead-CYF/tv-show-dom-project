@@ -133,7 +133,7 @@
 /***** CARDS *****/
 .card {
   height: auto;
-  width: 21%;
+  width: 20%;
   min-width: 240px;
   margin-bottom: 2rem;
   border-radius: 4px;
@@ -148,7 +148,7 @@
 }
 
 .img-wrapper {
-  height: 9rem;
+  height: 8rem;
   border-radius: 4px;
 }
 
@@ -177,14 +177,15 @@
 }
 
 /***** MEDIA QUERIES *****/
-@media screen and (max-width: 600px) {
-  .body {
-    background-color: olive;
+@media screen and (max-width: 760px) {
+  .dropdown-form {
+    margin-right: 0rem;
   }
 }
 
 @media screen and (max-width: 760px) {
-  .dropdown-form {
-    margin-right: 0rem;
+  /***** EPISODE COUNTER *****/
+  .counter-wrapper {
+    margin-left: 0rem;
   }
 }
