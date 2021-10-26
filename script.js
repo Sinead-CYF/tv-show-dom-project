@@ -5,6 +5,7 @@ const searchInput = document.createElement("input");
 const allEpisodes = getAllEpisodes();
 const cardsWrapper = document.createElement("div");
 const dropdownSelection = document.createElement("select");
+const options = document.createElement("option");
 
 function projectTitle() {
   const titleWrap = document.createElement("div");
@@ -15,7 +16,7 @@ function projectTitle() {
   titleWrap.appendChild(header);
 }
 
-function showTitle(allEpisodes) {
+function showTitle() {
   //SHOW TITLE WRAPPER
   const showTitleWrapper = document.createElement("div");
   showTitleWrapper.classList.add("show-title-wrapper");
@@ -43,11 +44,24 @@ function createSearchArea() {
   searchBarWrapper.appendChild(dropdownWrapper);
   dropdownWrapper.appendChild(dropdownSelection);
 
-  //POPULATE OPTIONS FROM ARRAY
+  //POPULATE OPTIONS FROM ARRAY - FORMATTED SEASON & EPISODE NUM (CODE USED TWICE)
   allEpisodes.forEach((episode) => {
-    const option = document.createElement("option");
-    option.setAttribute("label", `S01E01 - ${episode.name}`);
-    dropdownSelection.appendChild(option);
+    let seasonNum = episode.season;
+    let episodeNum = episode.number;
+
+    if (seasonNum < 10) {
+      seasonNum = `0${seasonNum}`;
+    }
+
+    if (episodeNum < 10) {
+      episodeNum = `0${episodeNum}`;
+    }
+    let formattedName = `S${seasonNum}E${episodeNum}`;
+
+    const options = document.createElement("option");
+    options.setAttribute("label", `${formattedName} - ${episode.name}`);
+    options.setAttribute("value", episode.name);
+    dropdownSelection.appendChild(options);
   });
 
   //SEARCH INPUT
@@ -68,7 +82,6 @@ function createSearchArea() {
   searchBarWrapper.appendChild(counterWrapper);
 }
 
-
 function createTvMazeLink() {
   const tvMazeWrapper = document.createElement("div");
   tvMazeWrapper.classList.add("tv-maze-wrapper");
@@ -80,14 +93,41 @@ function createTvMazeLink() {
   tvMazeWrapper.appendChild(tvMazeLink);
 }
 
+/******************************************************************************************************************* 
+ 
+I TRIED CREATING A FUNCTION TO FORMAT THE SEASON & EPISODE NUM BUT IT KEPT RETURNING UNDEFINED 
+
+function formatSeasonAndEpisode(allEpisodes) {
+  allEpisodes.forEach((episode) => {
+    //CAPTURING SEASON & EPISODE DETAILS
+    let seasonNum = episode.season;
+    let episodeNum = episode.number;
+
+    //ZERO-PADDING NUMBERS
+    if (seasonNum < 10) {
+      seasonNum = `0${seasonNum}`;
+    }
+
+    if (episodeNum < 10) {
+      episodeNum = `0${episodeNum}`;
+    }
+    let formattedName = `S${seasonNum}E${episodeNum}`;
+    return formattedName;
+  });
+}
+
+console.log(formatSeasonAndEpisode(allEpisodes)); 
+
+******************************************************************************************************************/
+
+//TILE-AREA WRAPPER
 function createCardsWrapper() {
-  //TILE-AREA WRAPPER
   body.appendChild(cardsWrapper);
   cardsWrapper.classList.add("cards-wrapper");
 }
 
 function displayEpisodeCards(episodeList) {
-  cardsWrapper.innerHTML = "";
+  cardsWrapper.innerHTML = ""; //why is this needed when the wrapper is empty of content anyway?
   episodeList.forEach((episode) => {
     //CREATING AN EPISODE CARD
     const card = document.createElement("div");
@@ -118,10 +158,12 @@ function displayEpisodeCards(episodeList) {
       episodeNum = `0${episodeNum}`;
     }
 
+    let formattedName = `S${seasonNum}E${episodeNum}`;
+
     //CARD HEADER
     const cardHeader = document.createElement("h2");
     cardHeader.classList.add("card-header");
-    cardHeader.textContent = `${episode.name} - S${seasonNum}E${episodeNum}`;
+    cardHeader.textContent = `${formattedName}`;
     card.appendChild(cardHeader);
 
     //CARD PARAGRAPH
@@ -131,6 +173,16 @@ function displayEpisodeCards(episodeList) {
     card.appendChild(cardParagraph);
   });
 }
+
+//ADD EVENT LISTENER TO DROPDOWN OPTIONS
+dropdownSelection.addEventListener("click", (e) => {
+  const selectedOption = dropdownSelection.value; 
+  const displaySelected = allEpisodes.filter((episode) => {
+    return episode.name.includes(selectedOption);
+  });
+  //  console.log(selectedOption);
+  displayEpisodeCards(displaySelected);
+});
 
 //ADD EVENT LISTENER TO SEARCH BAR
 searchInput.addEventListener("input", (e) => {
