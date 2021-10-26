@@ -45,7 +45,7 @@ function createSearchArea() {
   dropdownWrapper.appendChild(dropdownSelection);
 
   //POPULATE OPTIONS FROM ARRAY - FORMATTED SEASON & EPISODE NUM (CODE USED TWICE)
-  allEpisodes.forEach((episode) => {
+  allEpisodes.forEach((episode, index) => {
     let seasonNum = episode.season;
     let episodeNum = episode.number;
 
@@ -60,6 +60,16 @@ function createSearchArea() {
 
     const options = document.createElement("option");
     options.setAttribute("label", `${formattedName} - ${episode.name}`);
+
+    allEpisodes.push()
+    
+    //Setting a default value 
+    if (index === 0) {
+      options.setAttribute("selected", "selected");
+      options.setAttribute("label", `${formattedName} - ${episode.name} (List All)`);
+      console.log(options.selected);
+    }
+
     options.setAttribute("value", episode.name);
     dropdownSelection.appendChild(options);
   });
