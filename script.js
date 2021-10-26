@@ -7,6 +7,7 @@ const allEpisodes = getAllEpisodes();
 const cardsWrapper = document.createElement("div");
 const dropdownSelection = document.createElement("select");
 const options = document.createElement("option");
+const searchBarWrapper = document.createElement("section");
 
 /***** PROJECT TITLE *****/
 
@@ -38,7 +39,6 @@ function showTitle() {
 
 function createSearchArea() {
   //SEARCH BAR WRAPPER
-  const searchBarWrapper = document.createElement("section");
   searchBarWrapper.classList.add("search-bar-wrapper");
   body.appendChild(searchBarWrapper);
 
@@ -90,7 +90,11 @@ function createSearchArea() {
   searchInput.setAttribute("Name", "searchBar");
   searchInput.setAttribute("label", "search-episodes");
   searchBarWrapper.appendChild(searchInput);
+}
 
+/***** EPISODE COUNTER *****/
+
+function episodeCounter(allEpisodes) {
   //EPISODE COUNT DISPLAY
   const counterWrapper = document.createElement("div");
   counterWrapper.classList.add("counter-wrapper");
@@ -113,33 +117,6 @@ function createTvMazeLink() {
   tvMazeLink.href = "https://www.tvmaze.com";
   tvMazeWrapper.appendChild(tvMazeLink);
 }
-
-/******************************************************************************************************************* 
- 
-I TRIED CREATING A FUNCTION TO FORMAT THE SEASON & EPISODE NUM BUT IT KEPT RETURNING UNDEFINED 
-
-function formatSeasonAndEpisode(allEpisodes) {
-  allEpisodes.forEach((episode) => {
-    //CAPTURING SEASON & EPISODE DETAILS
-    let seasonNum = episode.season;
-    let episodeNum = episode.number;
-
-    //ZERO-PADDING NUMBERS
-    if (seasonNum < 10) {
-      seasonNum = `0${seasonNum}`;
-    }
-
-    if (episodeNum < 10) {
-      episodeNum = `0${episodeNum}`;
-    }
-    let formattedName = `S${seasonNum}E${episodeNum}`;
-    return formattedName;
-  });
-}
-
-console.log(formatSeasonAndEpisode(allEpisodes)); 
-
-******************************************************************************************************************/
 
 /***** TILE AREA WRAPPER *****/
 
@@ -232,6 +209,7 @@ function setup() {
   showTitle(allEpisodes);
   createTvMazeLink();
   createSearchArea();
+  episodeCounter(allEpisodes);
   createCardsWrapper();
   displayEpisodeCards(allEpisodes);
 }
