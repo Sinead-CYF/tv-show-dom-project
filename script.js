@@ -8,6 +8,10 @@ const cardsWrapper = document.createElement("div");
 const dropdownSelection = document.createElement("select");
 const options = document.createElement("option");
 const searchBarWrapper = document.createElement("section");
+const counterWrapper = document.createElement("div");
+const countH2 = document.createElement("h2");
+
+// const count = allEpisodes.length;
 
 /***** PROJECT TITLE *****/
 
@@ -54,7 +58,6 @@ function createSearchArea() {
   //POPULATE OPTIONS FROM ARRAY - FORMATTED SEASON & EPISODE NUM (CODE USED TWICE)
   const arrDropdown = [...allEpisodes];
   arrDropdown.unshift({ name: "default" });
-  console.log(arrDropdown);
 
   arrDropdown.forEach((episode, index) => {
     let seasonNum = episode.season;
@@ -76,7 +79,6 @@ function createSearchArea() {
     if (index === 0) {
       options.setAttribute("selected", "selected");
       options.setAttribute("label", `List all Episodes`);
-      console.log(options.selected);
     }
 
     options.setAttribute("value", episode.name);
@@ -90,19 +92,13 @@ function createSearchArea() {
   searchInput.setAttribute("Name", "searchBar");
   searchInput.setAttribute("label", "search-episodes");
   searchBarWrapper.appendChild(searchInput);
-}
 
-/***** EPISODE COUNTER *****/
-
-function episodeCounter(allEpisodes) {
-  //EPISODE COUNT DISPLAY
-  const counterWrapper = document.createElement("div");
+  /***** EPISODE COUNT WRAPPER *****/
   counterWrapper.classList.add("counter-wrapper");
-  const countH2 = document.createElement("h2");
-  countH2.classList.add("counter-heading");
-  countH2.textContent = `${allEpisodes.length} Episodes`;
   counterWrapper.appendChild(countH2);
   searchBarWrapper.appendChild(counterWrapper);
+  countH2.classList.add("counter-heading");
+  console.log(counterWrapper);
 }
 
 /***** TV-MAZE LINK *****/
@@ -189,18 +185,26 @@ dropdownSelection.addEventListener("click", (e) => {
   }
 });
 
+function counterText(arr) {
+  countH2.textContent = `${arr.length} Episodes`;
+}
+
+counterText(allEpisodes);
+
 /***** ADD EVENT LISTENER TO SEARCH BAR *****/
 searchInput.addEventListener("input", (e) => {
   const searchValue = e.target.value;
-  const filteredEpisodes = allEpisodes.filter((episode) => {
+  let filteredEpisodes = allEpisodes.filter((episode) => {
     return (
       episode.name.includes(searchValue) ||
       episode.summary.includes(searchValue)
     );
   });
-  // console.log(searchValue);
   displayEpisodeCards(filteredEpisodes);
+  counterText(filteredEpisodes);
 });
+
+// console.log(episodeCounter);
 
 /***** ON SET UP *****/
 function setup() {
@@ -209,7 +213,7 @@ function setup() {
   showTitle(allEpisodes);
   createTvMazeLink();
   createSearchArea();
-  episodeCounter(allEpisodes);
+  // episodeCounter(allEpisodes);
   createCardsWrapper();
   displayEpisodeCards(allEpisodes);
 }
