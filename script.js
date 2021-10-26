@@ -45,7 +45,11 @@ function createSearchArea() {
   dropdownWrapper.appendChild(dropdownSelection);
 
   //POPULATE OPTIONS FROM ARRAY - FORMATTED SEASON & EPISODE NUM (CODE USED TWICE)
-  allEpisodes.forEach((episode, index) => {
+  const arrDropdown = [...allEpisodes];
+  arrDropdown.unshift({ name: "default" });
+  console.log(arrDropdown);
+
+  arrDropdown.forEach((episode, index) => {
     let seasonNum = episode.season;
     let episodeNum = episode.number;
 
@@ -61,12 +65,10 @@ function createSearchArea() {
     const options = document.createElement("option");
     options.setAttribute("label", `${formattedName} - ${episode.name}`);
 
-    allEpisodes.push()
-    
-    //Setting a default value 
+    //Setting a default value
     if (index === 0) {
       options.setAttribute("selected", "selected");
-      options.setAttribute("label", `${formattedName} - ${episode.name} (List All)`);
+      options.setAttribute("label", `List all Episodes`);
       console.log(options.selected);
     }
 
@@ -186,12 +188,22 @@ function displayEpisodeCards(episodeList) {
 
 //ADD EVENT LISTENER TO DROPDOWN OPTIONS
 dropdownSelection.addEventListener("click", (e) => {
-  const selectedOption = dropdownSelection.value; 
+  const selectedOption = dropdownSelection.value;
   const displaySelected = allEpisodes.filter((episode) => {
     return episode.name.includes(selectedOption);
   });
-  //  console.log(selectedOption);
-  displayEpisodeCards(displaySelected);
+
+  if (dropdownSelection.value === "default"){
+    displayEpisodeCards(allEpisodes);
+  } else {
+    displayEpisodeCards(displaySelected);
+  }
+
+  // if (dropdownSelection.value === "default") {
+  //   displayEpisodeCards();
+  // } else {
+  //   displayEpisodeCards(displaySelected);
+  // }
 });
 
 //ADD EVENT LISTENER TO SEARCH BAR
