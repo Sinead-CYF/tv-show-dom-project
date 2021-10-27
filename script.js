@@ -180,13 +180,15 @@ dropdownSelection.addEventListener("click", (e) => {
   });
 
   if (dropdownSelection.value === "default") {
-    countH2.textContent = `73 / 73 Episodes`;  //why isn't this working  <<<<< 
     console.log(countH2);
     displayEpisodeCards(allEpisodes);
   } else {
     displayEpisodeCards(displaySelected);
   }
-  countH2.textContent = `1 / 73 Episodes`;
+  countH2.textContent = `73 / 73 Episodes`;
+  if (dropdownSelection.value !== "default") {
+    countH2.textContent = `1 / 73 Episodes`;
+  }
 });
 
 /***** EPISODE COUNT TEXT *****/
@@ -216,7 +218,7 @@ function setup() {
   showTitle(allEpisodes);
   createTvMazeLink();
   createSearchArea();
- 
+
   createCardsWrapper();
   displayEpisodeCards(allEpisodes);
 }
