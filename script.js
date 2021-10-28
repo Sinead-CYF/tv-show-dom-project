@@ -11,9 +11,6 @@ const searchBarWrapper = document.createElement("section");
 const counterWrapper = document.createElement("div");
 const countH2 = document.createElement("h2");
 countH2.textContent = `${allEpisodes.length} Episodes`;
-// let caught = "";
-
-// const count = allEpisodes.length;
 
 /***** PROJECT TITLE *****/
 
@@ -41,29 +38,19 @@ function showTitle() {
   showTitleWrapper.appendChild(showTitle);
 }
 
-//FOR EACH DOESN'T RETURN ANYTHING, NEED TO USE MAO? UNSURE HOW 
+/***** FORMAT SHOW DATA *****/
+function formatShowData(seasonNum, episodeNum) {
+  if (seasonNum < 10) {
+    seasonNum = `0${seasonNum}`;
+  }
 
-function formatShowData(allEpisodes) {
-  allEpisodes.forEach((episode) => {
-    let seasonNum = episode.season;
-    let episodeNum = episode.number;
+  if (episodeNum < 10) {
+    episodeNum = `0${episodeNum}`;
+  }
 
-    if (seasonNum < 10) {
-      seasonNum = `0${seasonNum}`;
-    }
-
-    if (episodeNum < 10) {
-      episodeNum = `0${episodeNum}`;
-    }
-
-    let format = `S${seasonNum}E${episodeNum}`;
-    //return format;
-    console.log(format);
-  });
+  let format = `S${seasonNum}E${episodeNum}`;
+  return format;
 }
-
-let formatted = formatShowData(allEpisodes);
-
 
 /***** SEARCH AREA *****/
 
@@ -86,22 +73,13 @@ function createSearchArea() {
   arrDropdown.unshift({ name: "default" });
 
   arrDropdown.forEach((episode, index) => {
-    // let seasonNum = episode.season;
-    // let episodeNum = episode.number;
-
-    // if (seasonNum < 10) {
-    //   seasonNum = `0${seasonNum}`;
-    // }
-
-    // if (episodeNum < 10) {
-    //   episodeNum = `0${episodeNum}`;
-    // }
-    // let formattedName = `S${seasonNum}E${episodeNum}`;
-
     const options = document.createElement("option");
-    options.setAttribute("label", `${formatted} - ${episode.name}`); //COMES BACK UNDEFINED. 
+    options.setAttribute(
+      "label",
+      `${formatShowData(episode.season, episode.number)} - ${episode.name}`
+    ); 
 
-    //Setting a default value
+    //Setting a default value for options
     if (index === 0) {
       options.setAttribute("selected", "selected");
       options.setAttribute("label", `List all Episodes`);
@@ -167,25 +145,10 @@ function displayEpisodeCards(episodeList) {
     images.src = episode.image.medium;
     imgWrapper.appendChild(images);
 
-    //CAPTURING SEASON & EPISODE DETAILS
-    let seasonNum = episode.season;
-    let episodeNum = episode.number;
-
-    //ZERO-PADDING NUMBERS
-    if (seasonNum < 10) {
-      seasonNum = `0${seasonNum}`;
-    }
-
-    if (episodeNum < 10) {
-      episodeNum = `0${episodeNum}`;
-    }
-
-    let formattedName = `S${seasonNum}E${episodeNum}`;
-
     //CARD HEADER
     const cardHeader = document.createElement("h2");
     cardHeader.classList.add("card-header");
-    cardHeader.textContent = `${formattedName}`;
+    cardHeader.textContent = formatShowData(episode.season, episode.number);
     card.appendChild(cardHeader);
 
     //CARD PARAGRAPH
@@ -245,15 +208,3 @@ function setup() {
 }
 
 window.onload = setup;
-
-/****************************************************************************************
-
-*** Level 300 - add an Episode Selector: ***
-
-Add a select input which allows you to jump quickly to an episode:
-The select input should list all episodes in the format: "S01E01 - Winter is Coming"
-When the user makes a selection, they should be taken directly to that episode in the list
-Bonus: if you prefer, when the select is used, ONLY show the selected episode. 
-If you do this, be sure to provide a way for the user to see all episodes again.
-
-*/
