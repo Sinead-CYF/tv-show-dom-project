@@ -11,6 +11,7 @@ const searchBarWrapper = document.createElement("section");
 const counterWrapper = document.createElement("div");
 const countH2 = document.createElement("h2");
 countH2.textContent = `${allEpisodes.length} Episodes`;
+// let caught = "";
 
 // const count = allEpisodes.length;
 
@@ -40,6 +41,30 @@ function showTitle() {
   showTitleWrapper.appendChild(showTitle);
 }
 
+//FOR EACH DOESN'T RETURN ANYTHING, NEED TO USE MAO? UNSURE HOW 
+
+function formatShowData(allEpisodes) {
+  allEpisodes.forEach((episode) => {
+    let seasonNum = episode.season;
+    let episodeNum = episode.number;
+
+    if (seasonNum < 10) {
+      seasonNum = `0${seasonNum}`;
+    }
+
+    if (episodeNum < 10) {
+      episodeNum = `0${episodeNum}`;
+    }
+
+    let format = `S${seasonNum}E${episodeNum}`;
+    //return format;
+    console.log(format);
+  });
+}
+
+let formatted = formatShowData(allEpisodes);
+
+
 /***** SEARCH AREA *****/
 
 function createSearchArea() {
@@ -61,20 +86,20 @@ function createSearchArea() {
   arrDropdown.unshift({ name: "default" });
 
   arrDropdown.forEach((episode, index) => {
-    let seasonNum = episode.season;
-    let episodeNum = episode.number;
+    // let seasonNum = episode.season;
+    // let episodeNum = episode.number;
 
-    if (seasonNum < 10) {
-      seasonNum = `0${seasonNum}`;
-    }
+    // if (seasonNum < 10) {
+    //   seasonNum = `0${seasonNum}`;
+    // }
 
-    if (episodeNum < 10) {
-      episodeNum = `0${episodeNum}`;
-    }
-    let formattedName = `S${seasonNum}E${episodeNum}`;
+    // if (episodeNum < 10) {
+    //   episodeNum = `0${episodeNum}`;
+    // }
+    // let formattedName = `S${seasonNum}E${episodeNum}`;
 
     const options = document.createElement("option");
-    options.setAttribute("label", `${formattedName} - ${episode.name}`);
+    options.setAttribute("label", `${formatted} - ${episode.name}`); //COMES BACK UNDEFINED. 
 
     //Setting a default value
     if (index === 0) {
@@ -99,7 +124,6 @@ function createSearchArea() {
   counterWrapper.appendChild(countH2);
   searchBarWrapper.appendChild(counterWrapper);
   countH2.classList.add("counter-heading");
-  console.log(counterWrapper);
 }
 
 /***** TV-MAZE LINK *****/
@@ -180,7 +204,6 @@ dropdownSelection.addEventListener("click", (e) => {
   });
 
   if (dropdownSelection.value === "default") {
-    console.log(countH2);
     displayEpisodeCards(allEpisodes);
   } else {
     displayEpisodeCards(displaySelected);
@@ -208,8 +231,6 @@ searchInput.addEventListener("input", (e) => {
   displayEpisodeCards(filteredEpisodes);
   counterText(filteredEpisodes);
 });
-
-// console.log(episodeCounter);
 
 /***** ON SET UP *****/
 function setup() {
