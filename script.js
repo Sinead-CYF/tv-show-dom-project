@@ -99,7 +99,6 @@ function createSearchArea() {
   counterWrapper.appendChild(countH2);
   searchBarWrapper.appendChild(counterWrapper);
   countH2.classList.add("counter-heading");
-  console.log(counterWrapper);
 }
 
 /***** TV-MAZE LINK *****/
@@ -180,7 +179,6 @@ dropdownSelection.addEventListener("click", (e) => {
   });
 
   if (dropdownSelection.value === "default") {
-    console.log(countH2);
     displayEpisodeCards(allEpisodes);
   } else {
     displayEpisodeCards(displaySelected);
@@ -208,8 +206,6 @@ searchInput.addEventListener("input", (e) => {
   displayEpisodeCards(filteredEpisodes);
   counterText(filteredEpisodes);
 });
-
-// console.log(episodeCounter);
 
 /***** ON SET UP *****/
 function setup() {
