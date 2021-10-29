@@ -162,7 +162,7 @@ function displayEpisodeCards(episodeList) {
     //CARD HEADER
     const cardHeader = document.createElement("h2");
     cardHeader.classList.add("card-header");
-    cardHeader.textContent = `${formattedName}`;
+    cardHeader.textContent = ` ${episode.name} - ${formattedName}`;
     card.appendChild(cardHeader);
 
     //CARD PARAGRAPH
