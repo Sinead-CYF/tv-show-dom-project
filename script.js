@@ -108,6 +108,8 @@ function createTvMazeLink() {
   tvMazeWrapper.classList.add("tv-maze-wrapper");
   body.appendChild(tvMazeWrapper);
   const tvMazeLink = document.createElement("a");
+  tvMazeLink.setAttribute("target", "_blank");
+  tvMazeLink.setAttribute("rel", "noreferrer noopener");
   tvMazeLink.classList.add("tv-maze-link");
   tvMazeLink.innerHTML = "SOURCED FROM TV-MAZE.COM";
   tvMazeLink.href = "https://www.tvmaze.com";
@@ -196,11 +198,11 @@ function counterText(filtered) {
 
 /***** ADD EVENT LISTENER TO SEARCH BAR *****/
 searchInput.addEventListener("input", (e) => {
-  const searchValue = e.target.value;
+  const searchValue = e.target.value.toLowerCase();
   let filteredEpisodes = allEpisodes.filter((episode) => {
     return (
-      episode.name.includes(searchValue) ||
-      episode.summary.includes(searchValue)
+      episode.name.toLowerCase().includes(searchValue) ||
+      episode.summary.toLowerCase().includes(searchValue)
     );
   });
   displayEpisodeCards(filteredEpisodes);
@@ -214,7 +216,6 @@ function setup() {
   showTitle(allEpisodes);
   createTvMazeLink();
   createSearchArea();
-
   createCardsWrapper();
   displayEpisodeCards(allEpisodes);
 }
