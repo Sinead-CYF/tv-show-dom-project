@@ -40,6 +40,20 @@ function showTitle() {
   showTitleWrapper.appendChild(showTitle);
 }
 
+  /***** FORMAT SHOW DATA *****/
+  function formatShowData(seasonNum, episodeNum) {
+    if (seasonNum < 10) {
+      seasonNum = `0${seasonNum}`;
+    }
+  
+    if (episodeNum < 10) {
+      episodeNum = `0${episodeNum}`;
+    }
+  
+    let format = `S${seasonNum}E${episodeNum}`;
+    return format;
+  }
+
 /***** SEARCH AREA *****/
 
 function createSearchArea() {
@@ -61,20 +75,8 @@ function createSearchArea() {
   arrDropdown.unshift({ name: "default" });
 
   arrDropdown.forEach((episode, index) => {
-    let seasonNum = episode.season;
-    let episodeNum = episode.number;
-
-    if (seasonNum < 10) {
-      seasonNum = `0${seasonNum}`;
-    }
-
-    if (episodeNum < 10) {
-      episodeNum = `0${episodeNum}`;
-    }
-    let formattedName = `S${seasonNum}E${episodeNum}`;
-
     const options = document.createElement("option");
-    options.setAttribute("label", `${formattedName} - ${episode.name}`);
+    options.setAttribute("label", `${formatShowData(episode.season, episode.number)} - ${episode.name}`);
 
     //Setting a default value
     if (index === 0) {
@@ -116,6 +118,8 @@ function createTvMazeLink() {
   tvMazeWrapper.appendChild(tvMazeLink);
 }
 
+
+
 /***** TILE AREA WRAPPER *****/
 
 function createCardsWrapper() {
@@ -148,21 +152,10 @@ function displayEpisodeCards(episodeList) {
     let seasonNum = episode.season;
     let episodeNum = episode.number;
 
-    //ZERO-PADDING NUMBERS
-    if (seasonNum < 10) {
-      seasonNum = `0${seasonNum}`;
-    }
-
-    if (episodeNum < 10) {
-      episodeNum = `0${episodeNum}`;
-    }
-
-    let formattedName = `S${seasonNum}E${episodeNum}`;
-
     //CARD HEADER
     const cardHeader = document.createElement("h2");
     cardHeader.classList.add("card-header");
-    cardHeader.textContent = ` ${episode.name} - ${formattedName}`;
+    cardHeader.textContent = episode.name + formatShowData(episode.season, episode.number);
     card.appendChild(cardHeader);
 
     //CARD PARAGRAPH
@@ -222,14 +215,5 @@ function setup() {
 
 window.onload = setup;
 
-/****************************************************************************************
+/****************************************************************************************/
 
-*** Level 300 - add an Episode Selector: ***
-
-Add a select input which allows you to jump quickly to an episode:
-The select input should list all episodes in the format: "S01E01 - Winter is Coming"
-When the user makes a selection, they should be taken directly to that episode in the list
-Bonus: if you prefer, when the select is used, ONLY show the selected episode. 
-If you do this, be sure to provide a way for the user to see all episodes again.
-
-*/
