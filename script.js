@@ -52,6 +52,7 @@ function showTitle() {
     return format;
   }
 
+
 /***** SEARCH AREA *****/
 
 function createSearchArea() {
@@ -68,7 +69,7 @@ function createSearchArea() {
   searchBarWrapper.appendChild(dropdownWrapper);
   dropdownWrapper.appendChild(dropdownSelection);
 
-  //POPULATE OPTIONS FROM ARRAY - FORMATTED SEASON & EPISODE NUM (CODE USED TWICE)
+  //POPULATE OPTIONS FROM ARRAY - FORMATTED SEASON & EPISODE NUM 
   const arrDropdown = [...allEpisodes];
   arrDropdown.unshift({ name: "default" });
 
@@ -146,14 +147,10 @@ function displayEpisodeCards(episodeList) {
     images.src = episode.image.medium;
     imgWrapper.appendChild(images);
 
-    //CAPTURING SEASON & EPISODE DETAILS
-    let seasonNum = episode.season;
-    let episodeNum = episode.number;
-
     //CARD HEADER
     const cardHeader = document.createElement("h2");
     cardHeader.classList.add("card-header");
-    cardHeader.textContent = episode.name + formatShowData(episode.season, episode.number);
+    cardHeader.textContent = `${episode.name} - ${formatShowData(episode.season, episode.number)}`;
     card.appendChild(cardHeader);
 
     //CARD PARAGRAPH
