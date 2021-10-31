@@ -12,8 +12,6 @@ const counterWrapper = document.createElement("div");
 const countH2 = document.createElement("h2");
 countH2.textContent = `${allEpisodes.length} Episodes`;
 
-// const count = allEpisodes.length;
-
 /***** PROJECT TITLE *****/
 
 function projectTitle() {
