@@ -1,16 +1,45 @@
 /***** GLOBAL ELEMENTS *****/
-
 const body = document.querySelector("body");
 body.classList.add("body");
 const searchInput = document.createElement("input");
-const allEpisodes = getAllEpisodes();
 const cardsWrapper = document.createElement("div");
 const dropdownSelection = document.createElement("select");
 const options = document.createElement("option");
 const searchBarWrapper = document.createElement("section");
 const counterWrapper = document.createElement("div");
 const countH2 = document.createElement("h2");
-countH2.textContent = `${allEpisodes.length} Episodes`;
+
+
+/***** API *****/
+const TvShowApi = "https://api.tvmaze.com/shows/82/episodes";
+let allEpisodes;
+
+/***** SET UP *****/
+function setup() {
+  fetch(TvShowApi)
+    .then(function (response) {
+      if (response.ok) {
+        return response.json();
+      }
+      throw `${response.status} ${response.statusText}`;
+    })
+    .then(function (data) {
+      allEpisodes = data;
+      projectTitle();
+      showTitle();
+      createTvMazeLink();
+      createSearchArea();
+      countH2.textContent = `${allEpisodes.length} Episodes`;
+      createCardsWrapper();
+      displayEpisodeCards(allEpisodes);
+    })
+    .catch(function (error) {
+      console.log("An error occurred:", error);
+    });
+}
+
+window.onload = setup;
+
 
 /***** PROJECT TITLE *****/
 
@@ -38,20 +67,19 @@ function showTitle() {
   showTitleWrapper.appendChild(showTitle);
 }
 
-  /***** FORMAT SHOW DATA *****/
-  function formatShowData(seasonNum, episodeNum) {
-    if (seasonNum < 10) {
-      seasonNum = `0${seasonNum}`;
-    }
-  
-    if (episodeNum < 10) {
-      episodeNum = `0${episodeNum}`;
-    }
-  
-    let format = `S${seasonNum}E${episodeNum}`;
-    return format;
+/***** FORMAT SHOW DATA *****/
+function formatShowData(seasonNum, episodeNum) {
+  if (seasonNum < 10) {
+    seasonNum = `0${seasonNum}`;
   }
 
+  if (episodeNum < 10) {
+    episodeNum = `0${episodeNum}`;
+  }
+
+  let format = `S${seasonNum}E${episodeNum}`;
+  return format;
+}
 
 /***** SEARCH AREA *****/
 
@@ -69,13 +97,16 @@ function createSearchArea() {
   searchBarWrapper.appendChild(dropdownWrapper);
   dropdownWrapper.appendChild(dropdownSelection);
 
-  //POPULATE OPTIONS FROM ARRAY - FORMATTED SEASON & EPISODE NUM 
+  //POPULATE OPTIONS FROM ARRAY - FORMATTED SEASON & EPISODE NUM
   const arrDropdown = [...allEpisodes];
   arrDropdown.unshift({ name: "default" });
 
   arrDropdown.forEach((episode, index) => {
     const options = document.createElement("option");
-    options.setAttribute("label", `${formatShowData(episode.season, episode.number)} - ${episode.name}`);
+    options.setAttribute(
+      "label",
+      `${formatShowData(episode.season, episode.number)} - ${episode.name}`
+    );
 
     //Setting a default value
     if (index === 0) {
@@ -117,8 +148,6 @@ function createTvMazeLink() {
   tvMazeWrapper.appendChild(tvMazeLink);
 }
 
-
-
 /***** TILE AREA WRAPPER *****/
 
 function createCardsWrapper() {
@@ -150,7 +179,10 @@ function displayEpisodeCards(episodeList) {
     //CARD HEADER
     const cardHeader = document.createElement("h2");
     cardHeader.classList.add("card-header");
-    cardHeader.textContent = `${episode.name} - ${formatShowData(episode.season, episode.number)}`;
+    cardHeader.textContent = `${episode.name} - ${formatShowData(
+      episode.season,
+      episode.number
+    )}`;
     card.appendChild(cardHeader);
 
     //CARD PARAGRAPH
@@ -197,18 +229,4 @@ searchInput.addEventListener("input", (e) => {
   counterText(filteredEpisodes);
 });
 
-/***** ON SET UP *****/
-function setup() {
-  const allEpisodes = getAllEpisodes();
-  projectTitle();
-  showTitle(allEpisodes);
-  createTvMazeLink();
-  createSearchArea();
-  createCardsWrapper();
-  displayEpisodeCards(allEpisodes);
-}
-
-window.onload = setup;
-
 /****************************************************************************************/
-
