@@ -14,16 +14,17 @@ const countH2 = document.createElement("h2");
 const TvShowApi = "https://api.tvmaze.com/shows/82/episodes";
 let allEpisodes;
 
+
 /***** SET UP *****/
 function setup() {
   fetch(TvShowApi)
-    .then(function (response) {
+    .then(response => {
       if (response.ok) {
         return response.json();
       }
       throw `${response.status} ${response.statusText}`;
     })
-    .then(function (data) {
+    .then(data => {
       allEpisodes = data;
       projectTitle();
       showTitle();
@@ -33,8 +34,8 @@ function setup() {
       createCardsWrapper();
       displayEpisodeCards(allEpisodes);
     })
-    .catch(function (error) {
-      console.log("An error occurred:", error);
+    .catch(error => {
+      console.log("An Error Occurred:", error);
     });
 }
 
