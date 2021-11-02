@@ -25,11 +25,12 @@ function setup() {
     })
     .then(function (data) {
       allEpisodes = data;
+      console.log(data);
       projectTitle();
       showTitle();
       createTvMazeLink();
       createSearchArea();
-      countH2.textContent = `${allEpisodes.length} Episodes`;
+      countH2.textContent = `${allEpisodes.length} / ${allEpisodes.length} Episodes`;
       createCardsWrapper();
       displayEpisodeCards(allEpisodes);
     })
@@ -205,15 +206,15 @@ dropdownSelection.addEventListener("click", (e) => {
   } else {
     displayEpisodeCards(displaySelected);
   }
-  countH2.textContent = `73 / 73 Episodes`;
+  countH2.textContent = `${allEpisodes.length} / ${allEpisodes.length} Episodes`;
   if (dropdownSelection.value !== "default") {
-    countH2.textContent = `1 / 73 Episodes`;
+    countH2.textContent = `1 / ${allEpisodes.length} Episodes`;
   }
 });
 
 /***** EPISODE COUNT TEXT *****/
 function counterText(filtered) {
-  countH2.textContent = `${filtered.length} / 73 Episodes`;
+  countH2.textContent = `${filtered.length} / ${allEpisodes.length}`;
 }
 
 /***** ADD EVENT LISTENER TO SEARCH BAR *****/
