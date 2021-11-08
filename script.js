@@ -37,7 +37,7 @@ function setup() {
       showsAndEpisodeCounter();
       countH2.textContent = `${allEpisodes.length} / ${allEpisodes.length} Episodes`;
       createCardsWrapper();
-      displayEpisodeCards(allEpisodes);
+      // displayEpisodeCards(allEpisodes);
     })
     .catch((error) => {
       console.log("An Error Occurred:", error);
@@ -79,8 +79,9 @@ function searchAreaWrapper() {
 }
 
 /***** ALL SHOWS API *****/
-let allShows;
+
 let allShows_API = "https://api.tvmaze.com/shows";
+let allShows;
 
 fetch(allShows_API)
   .then((response) => {
@@ -91,6 +92,7 @@ fetch(allShows_API)
   })
   .then((data) => {
     allShows = data;
+    console.log(allShows);
   })
   .catch((error) => {
     console.log("An Error Occurred:", error);
@@ -118,7 +120,6 @@ function allShowsDropdown() {
 
   //POPULATE ALL SHOWS OPTIONS
   const arrShowsDropdown = [...allShows];
-  console.log(arrShowsDropdown);
   arrShowsDropdown.unshift({ name: "default" });
   const sortedShows = arrShowsDropdown.sort((a, b) =>
     a.name < b.name ? -1 : 1
@@ -242,9 +243,9 @@ function displayEpisodeCards(episodeList) {
 }
 
 /***** ALL SHOWS - CARDS *****/
-function showCards(showList) {
+function showCards(shows) {
   cardsWrapper.innerHTML = "";
-  showList.forEach((show) => {
+  shows.forEach((show) => {
     //CREATING AN SHOW CARD
     const card = document.createElement("div");
     card.classList.add("card");
@@ -274,6 +275,8 @@ function showCards(showList) {
     card.appendChild(cardParagraph);
   });
 }
+
+console.log(showCards());
 
 /***** ADD EVENT LISTENER TO EPISODE DROPDOWN OPTIONS *****/
 dropdownSelection.addEventListener("click", (e) => {
@@ -308,10 +311,11 @@ searchInput.addEventListener("input", (e) => {
 
 /***** ADD EVENT LISTENER TO SHOW DROPDOWN OPTIONS *****/
 showDropdownSelection.addEventListener("click", (e) => {
+ 
   //  << -----  allShows undefined
   const selectedShowOption = dropdownSelection.value;
   const displaySelectedShows = allShows.filter((show) => {
-    return allShows.name.includes(selectedShowOption);
+    return show.name.includes(selectedShowOption);
   });
 
   if (showDropdownSelection.value === "default") {
