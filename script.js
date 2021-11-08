@@ -1,3 +1,6 @@
+/***** ON SETUP *****/
+window.onload = setup;
+
 /***** GLOBAL ELEMENTS *****/
 const body = document.querySelector("body");
 body.classList.add("body");
@@ -25,7 +28,6 @@ function setup() {
     })
     .then((data) => {
       allEpisodes = data;
-      projectTitle();
       showTitle();
       createTvMazeLink();
       searchAreaWrapper();
@@ -42,21 +44,7 @@ function setup() {
     });
 }
 
-window.onload = setup;
-
-/***** PROJECT TITLE *****/
-
-function projectTitle() {
-  const titleWrap = document.createElement("div");
-  titleWrap.classList.add("title-wrapper");
-  const header = document.createElement("h1");
-  header.innerText = "TV DOM Project";
-  body.appendChild(titleWrap);
-  titleWrap.appendChild(header);
-}
-
 /***** SHOW TITLE *****/
-
 function showTitle() {
   //SHOW TITLE WRAPPER
   const showTitleWrapper = document.createElement("div");
@@ -71,7 +59,6 @@ function showTitle() {
 }
 
 /***** TV-MAZE LINK *****/
-
 function createTvMazeLink() {
   const tvMazeWrapper = document.createElement("div");
   tvMazeWrapper.classList.add("tv-maze-wrapper");
@@ -85,31 +72,16 @@ function createTvMazeLink() {
   tvMazeWrapper.appendChild(tvMazeLink);
 }
 
-/***** FORMAT SHOW DATA *****/
-
-function formatShowData(seasonNum, episodeNum) {
-  if (seasonNum < 10) {
-    seasonNum = `0${seasonNum}`;
-  }
-
-  if (episodeNum < 10) {
-    episodeNum = `0${episodeNum}`;
-  }
-
-  let format = `S${seasonNum}E${episodeNum}`;
-  return format;
-}
-
-/***** SEARCH AREA *****/
-
+/***** CREATE SEARCH SECTION *****/
 function searchAreaWrapper() {
   searchBarWrapper.classList.add("search-bar-wrapper");
   body.appendChild(searchBarWrapper);
 }
 
-
 /***** ALL SHOWS API *****/
+let allShows;
 let allShows_API = "https://api.tvmaze.com/shows";
+
 fetch(allShows_API)
   .then((response) => {
     if (response.ok) {
@@ -119,15 +91,22 @@ fetch(allShows_API)
   })
   .then((data) => {
     allShows = data;
-    console.log(Array.isArray(allShows));
-    createCardsWrapper();
-    allShowsDropdown(allShows);
   })
   .catch((error) => {
     console.log("An Error Occurred:", error);
   });
 
+/***** SEARCH BAR*****/
+function searchBar() {
+  searchInput.classList.add("search-input");
+  searchInput.type = "text";
+  searchInput.setAttribute("placeholder", "Search");
+  searchInput.setAttribute("Name", "searchBar");
+  searchInput.setAttribute("label", "search-episodes");
+  searchBarWrapper.appendChild(searchInput);
+}
 
+/***** SHOWS DROP DOWN *****/
 function allShowsDropdown() {
   const showDropdownWrapper = document.createElement("form");
   showDropdownWrapper.classList.add("dropdown-form");
@@ -137,30 +116,29 @@ function allShowsDropdown() {
   searchBarWrapper.appendChild(showDropdownWrapper);
   showDropdownWrapper.appendChild(showDropdownSelection);
 
-  //POPULATE ALL SHOWS OPTIONS FROM ARRAY
-  const arrShowsDropdown = [...allShows];  
-  console.log(arrShowsDropdown); 
-  arrShowsDropdown.unshift({ name: "default" }); 
-  const sortedShows = arrShowsDropdown.sort((a, b) => a.name < b.name ? -1 : 1);
+  //POPULATE ALL SHOWS OPTIONS
+  const arrShowsDropdown = [...allShows];
+  console.log(arrShowsDropdown);
+  arrShowsDropdown.unshift({ name: "default" });
+  const sortedShows = arrShowsDropdown.sort((a, b) =>
+    a.name < b.name ? -1 : 1
+  );
 
   sortedShows.forEach((show, index) => {
-    const showOptions = document.createElement("option"); 
-    showOptions.setAttribute(
-      "label",
-      `${show.name}` 
-    );
+    const showOptions = document.createElement("option");
+    showOptions.setAttribute("label", `${show.name}`);
 
-    //Setting a default value
     if (index === 0) {
       showOptions.setAttribute("selected", "selected");
       showOptions.setAttribute("label", `List all Shows... `);
     }
 
-    showOptions.setAttribute("value", show.name); //value of options (name)
-    showDropdownSelection.appendChild(showOptions); //append options 
+    showOptions.setAttribute("value", show.name);
+    showDropdownSelection.appendChild(showOptions);
   });
 }
 
+/***** EPISODE DROPDOWN *****/
 function allEpisodesDropdown() {
   const dropdownWrapper = document.createElement("form");
   dropdownWrapper.classList.add("dropdown-form");
@@ -192,15 +170,7 @@ function allEpisodesDropdown() {
   });
 }
 
-function searchBar() {
-  searchInput.classList.add("search-input");
-  searchInput.type = "text";
-  searchInput.setAttribute("placeholder", "Search");
-  searchInput.setAttribute("Name", "searchBar");
-  searchInput.setAttribute("label", "search-episodes");
-  searchBarWrapper.appendChild(searchInput);
-}
-
+/***** SHOW & EPISODE COUNTER *****/
 function showsAndEpisodeCounter() {
   counterWrapper.classList.add("counter-wrapper");
   counterWrapper.appendChild(countH2);
@@ -208,17 +178,35 @@ function showsAndEpisodeCounter() {
   countH2.classList.add("counter-heading");
 }
 
-/***** TILE AREA WRAPPER *****/
+/***** EPISODE COUNT TEXT *****/
+function counterText(filtered) {
+  countH2.textContent = `${filtered.length} / ${allEpisodes.length}`;
+}
 
+/***** TILE AREA WRAPPER *****/
 function createCardsWrapper() {
   body.appendChild(cardsWrapper);
   cardsWrapper.classList.add("cards-wrapper");
 }
 
+/***** FORMAT SHOW DATA *****/
+function formatShowData(seasonNum, episodeNum) {
+  if (seasonNum < 10) {
+    seasonNum = `0${seasonNum}`;
+  }
+
+  if (episodeNum < 10) {
+    episodeNum = `0${episodeNum}`;
+  }
+
+  let format = `S${seasonNum}E${episodeNum}`;
+  return format;
+}
+
 /***** DISPLAY EPISODE CARDS *****/
 
 function displayEpisodeCards(episodeList) {
-  cardsWrapper.innerHTML = ""; //why is this needed when the wrapper is empty of content anyway?
+  cardsWrapper.innerHTML = "";
   episodeList.forEach((episode) => {
     //CREATING AN EPISODE CARD
     const card = document.createElement("div");
@@ -253,7 +241,44 @@ function displayEpisodeCards(episodeList) {
   });
 }
 
-/***** ADD EVENT LISTENER TO DROPDOWN OPTIONS *****/
+/***** ALL SHOWS - CARDS *****/
+function showCards(allShows) {
+  cardsWrapper.innerHTML = "";
+  allShows.forEach((show) => {
+    //CREATING AN EPISODE CARD
+    const card = document.createElement("div");
+    card.classList.add("card");
+    cardsWrapper.appendChild(card);
+
+    //CARD IMG WRAPPER
+    const imgWrapper = document.createElement("div");
+    imgWrapper.classList.add("img-wrapper");
+    card.appendChild(imgWrapper);
+
+    //IMAGES
+    const images = document.createElement("img");
+    images.classList.add("images");
+    images.src = episode.image.medium;
+    imgWrapper.appendChild(images);
+
+    //CARD HEADER
+    const cardHeader = document.createElement("h2");
+    cardHeader.classList.add("card-header");
+    cardHeader.textContent = `${episode.name} - ${formatShowData(
+      episode.season,
+      episode.number
+    )}`;
+    card.appendChild(cardHeader);
+
+    //CARD PARAGRAPH
+    const cardParagraph = document.createElement("p");
+    cardParagraph.classList.add("card-paragraph-wrapper");
+    cardParagraph.innerHTML = episode.summary;
+    card.appendChild(cardParagraph);
+  });
+}
+
+/***** ADD EVENT LISTENER TO EPISODE DROPDOWN OPTIONS *****/
 dropdownSelection.addEventListener("click", (e) => {
   const selectedOption = dropdownSelection.value;
   const displaySelected = allEpisodes.filter((episode) => {
@@ -271,11 +296,6 @@ dropdownSelection.addEventListener("click", (e) => {
   }
 });
 
-/***** EPISODE COUNT TEXT *****/
-function counterText(filtered) {
-  countH2.textContent = `${filtered.length} / ${allEpisodes.length}`;
-}
-
 /***** ADD EVENT LISTENER TO SEARCH BAR *****/
 searchInput.addEventListener("input", (e) => {
   const searchValue = e.target.value.toLowerCase();
@@ -287,6 +307,25 @@ searchInput.addEventListener("input", (e) => {
   });
   displayEpisodeCards(filteredEpisodes);
   counterText(filteredEpisodes);
+});
+
+/***** ADD EVENT LISTENER TO SHOW DROPDOWN OPTIONS *****/
+showDropdownSelection.addEventListener("click", (e) => {
+  //  << -----  allShows undefined
+  const selectedShowOption = dropdownSelection.value;
+  const displaySelectedShows = allShows.filter((show) => {
+    return allShows.name.includes(selectedShowOption);
+  });
+
+  if (showDropdownSelection.value === "default") {
+    showCards(allShows);
+  } else {
+    showCards(displaySelectedShows);
+  }
+  countH2.textContent = `${allShows.length} / ${allShows.length} Shows`;
+  if (showDropdownSelection.value !== "default") {
+    countH2.textContent = `1 / ${allShows.length} Shows`;
+  }
 });
 
 /****************************************************************************************/
