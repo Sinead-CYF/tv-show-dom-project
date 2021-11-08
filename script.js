@@ -3,45 +3,46 @@ const body = document.querySelector("body");
 body.classList.add("body");
 const searchInput = document.createElement("input");
 const cardsWrapper = document.createElement("div");
+const showDropdownSelection = document.createElement("select");
 const dropdownSelection = document.createElement("select");
 const options = document.createElement("option");
 const searchBarWrapper = document.createElement("section");
 const counterWrapper = document.createElement("div");
 const countH2 = document.createElement("h2");
 
-
-/***** API *****/
+/*****Episodes API *****/
 const TvShowApi = "https://api.tvmaze.com/shows/82/episodes";
 let allEpisodes;
-
 
 /***** SET UP *****/
 function setup() {
   fetch(TvShowApi)
-    .then(response => {
+    .then((response) => {
       if (response.ok) {
         return response.json();
       }
       throw `${response.status} ${response.statusText}`;
     })
-    .then(data => {
+    .then((data) => {
       allEpisodes = data;
-      console.log(data);
       projectTitle();
       showTitle();
       createTvMazeLink();
-      createSearchArea();
+      searchAreaWrapper();
+      allShowsDropdown();
+      allEpisodesDropdown();
+      searchBar();
+      showsAndEpisodeCounter();
       countH2.textContent = `${allEpisodes.length} / ${allEpisodes.length} Episodes`;
       createCardsWrapper();
       displayEpisodeCards(allEpisodes);
     })
-    .catch(error => {
+    .catch((error) => {
       console.log("An Error Occurred:", error);
     });
 }
 
 window.onload = setup;
-
 
 /***** PROJECT TITLE *****/
 
@@ -69,7 +70,23 @@ function showTitle() {
   showTitleWrapper.appendChild(showTitle);
 }
 
+/***** TV-MAZE LINK *****/
+
+function createTvMazeLink() {
+  const tvMazeWrapper = document.createElement("div");
+  tvMazeWrapper.classList.add("tv-maze-wrapper");
+  body.appendChild(tvMazeWrapper);
+  const tvMazeLink = document.createElement("a");
+  tvMazeLink.setAttribute("target", "_blank");
+  tvMazeLink.setAttribute("rel", "noreferrer noopener");
+  tvMazeLink.classList.add("tv-maze-link");
+  tvMazeLink.innerHTML = "SOURCED FROM TV-MAZE.COM";
+  tvMazeLink.href = "https://www.tvmaze.com";
+  tvMazeWrapper.appendChild(tvMazeLink);
+}
+
 /***** FORMAT SHOW DATA *****/
+
 function formatShowData(seasonNum, episodeNum) {
   if (seasonNum < 10) {
     seasonNum = `0${seasonNum}`;
@@ -85,12 +102,66 @@ function formatShowData(seasonNum, episodeNum) {
 
 /***** SEARCH AREA *****/
 
-function createSearchArea() {
-  //SEARCH BAR WRAPPER
+function searchAreaWrapper() {
   searchBarWrapper.classList.add("search-bar-wrapper");
   body.appendChild(searchBarWrapper);
+}
 
-  //SELECT DROP DOWN OPTIONS
+
+/***** ALL SHOWS API *****/
+let allShows_API = "https://api.tvmaze.com/shows";
+fetch(allShows_API)
+  .then((response) => {
+    if (response.ok) {
+      return response.json();
+    }
+    throw `${response.status} ${response.statusText}`;
+  })
+  .then((data) => {
+    allShows = data;
+    console.log(Array.isArray(allShows));
+    createCardsWrapper();
+    allShowsDropdown(allShows);
+  })
+  .catch((error) => {
+    console.log("An Error Occurred:", error);
+  });
+
+
+function allShowsDropdown() {
+  const showDropdownWrapper = document.createElement("form");
+  showDropdownWrapper.classList.add("dropdown-form");
+  showDropdownSelection.classList.add("dropdown-selector");
+  showDropdownSelection.setAttribute("name", "show-dropdown-selection");
+  showDropdownSelection.setAttribute("label", "select-show");
+  searchBarWrapper.appendChild(showDropdownWrapper);
+  showDropdownWrapper.appendChild(showDropdownSelection);
+
+  //POPULATE ALL SHOWS OPTIONS FROM ARRAY
+  const arrShowsDropdown = [...allShows];  
+  console.log(arrShowsDropdown); 
+  arrShowsDropdown.unshift({ name: "default" }); 
+  const sortedShows = arrShowsDropdown.sort((a, b) => a.name < b.name ? -1 : 1);
+
+  sortedShows.forEach((show, index) => {
+    const showOptions = document.createElement("option"); 
+    showOptions.setAttribute(
+      "label",
+      `${show.name}` 
+    );
+
+    //Setting a default value
+    if (index === 0) {
+      showOptions.setAttribute("selected", "selected");
+      showOptions.setAttribute("label", `List all Shows... `);
+    }
+
+    showOptions.setAttribute("value", show.name); //value of options (name)
+    showDropdownSelection.appendChild(showOptions); //append options 
+  });
+}
+
+function allEpisodesDropdown() {
   const dropdownWrapper = document.createElement("form");
   dropdownWrapper.classList.add("dropdown-form");
   dropdownSelection.classList.add("dropdown-selector");
@@ -99,7 +170,7 @@ function createSearchArea() {
   searchBarWrapper.appendChild(dropdownWrapper);
   dropdownWrapper.appendChild(dropdownSelection);
 
-  //POPULATE OPTIONS FROM ARRAY - FORMATTED SEASON & EPISODE NUM
+  //POPULATE EPISODE OPTIONS FROM ARRAY - FORMATTED SEASON & EPISODE NUM
   const arrDropdown = [...allEpisodes];
   arrDropdown.unshift({ name: "default" });
 
@@ -119,35 +190,22 @@ function createSearchArea() {
     options.setAttribute("value", episode.name);
     dropdownSelection.appendChild(options);
   });
+}
 
-  //SEARCH INPUT
+function searchBar() {
   searchInput.classList.add("search-input");
   searchInput.type = "text";
   searchInput.setAttribute("placeholder", "Search");
   searchInput.setAttribute("Name", "searchBar");
   searchInput.setAttribute("label", "search-episodes");
   searchBarWrapper.appendChild(searchInput);
+}
 
-  /***** EPISODE COUNT WRAPPER *****/
+function showsAndEpisodeCounter() {
   counterWrapper.classList.add("counter-wrapper");
   counterWrapper.appendChild(countH2);
   searchBarWrapper.appendChild(counterWrapper);
   countH2.classList.add("counter-heading");
-}
-
-/***** TV-MAZE LINK *****/
-
-function createTvMazeLink() {
-  const tvMazeWrapper = document.createElement("div");
-  tvMazeWrapper.classList.add("tv-maze-wrapper");
-  body.appendChild(tvMazeWrapper);
-  const tvMazeLink = document.createElement("a");
-  tvMazeLink.setAttribute("target", "_blank");
-  tvMazeLink.setAttribute("rel", "noreferrer noopener");
-  tvMazeLink.classList.add("tv-maze-link");
-  tvMazeLink.innerHTML = "SOURCED FROM TV-MAZE.COM";
-  tvMazeLink.href = "https://www.tvmaze.com";
-  tvMazeWrapper.appendChild(tvMazeLink);
 }
 
 /***** TILE AREA WRAPPER *****/
