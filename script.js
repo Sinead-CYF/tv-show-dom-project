@@ -242,10 +242,10 @@ function displayEpisodeCards(episodeList) {
 }
 
 /***** ALL SHOWS - CARDS *****/
-function showCards(allShows) {
+function showCards(showList) {
   cardsWrapper.innerHTML = "";
-  allShows.forEach((show) => {
-    //CREATING AN EPISODE CARD
+  showList.forEach((show) => {
+    //CREATING AN SHOW CARD
     const card = document.createElement("div");
     card.classList.add("card");
     cardsWrapper.appendChild(card);
@@ -258,22 +258,19 @@ function showCards(allShows) {
     //IMAGES
     const images = document.createElement("img");
     images.classList.add("images");
-    images.src = episode.image.medium;
+    images.src = show.image.medium;
     imgWrapper.appendChild(images);
 
     //CARD HEADER
     const cardHeader = document.createElement("h2");
     cardHeader.classList.add("card-header");
-    cardHeader.textContent = `${episode.name} - ${formatShowData(
-      episode.season,
-      episode.number
-    )}`;
+    cardHeader.textContent = `${show.name}`;
     card.appendChild(cardHeader);
 
     //CARD PARAGRAPH
     const cardParagraph = document.createElement("p");
     cardParagraph.classList.add("card-paragraph-wrapper");
-    cardParagraph.innerHTML = episode.summary;
+    cardParagraph.innerHTML = show.summary;
     card.appendChild(cardParagraph);
   });
 }
