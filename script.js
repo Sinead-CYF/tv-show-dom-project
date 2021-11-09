@@ -13,6 +13,7 @@ const searchBarWrapper = document.createElement("section");
 const counterWrapper = document.createElement("div");
 const countH2 = document.createElement("h2");
 
+
 /*****Episodes API *****/
 const TvShowApi = "https://api.tvmaze.com/shows/82/episodes";
 let allEpisodes;
@@ -28,7 +29,7 @@ function setup() {
     })
     .then((data) => {
       allEpisodes = data;
-      showTitle();
+      pageTitle();
       createTvMazeLink();
       searchAreaWrapper();
       allShowsDropdown();
@@ -44,8 +45,8 @@ function setup() {
     });
 }
 
-/***** SHOW TITLE *****/
-function showTitle() {
+/***** PAGE TITLE *****/
+function pageTitle() {
   //SHOW TITLE WRAPPER
   const showTitleWrapper = document.createElement("div");
   showTitleWrapper.classList.add("show-title-wrapper");
@@ -54,7 +55,7 @@ function showTitle() {
   //SHOW TITLE TEXT
   const showTitle = document.createElement("h1");
   showTitle.classList.add("show-title");
-  showTitle.textContent = `Game of Thrones`;
+  showTitle.innerHTML = `TV on Demand`;
   showTitleWrapper.appendChild(showTitle);
 }
 
@@ -120,10 +121,13 @@ function allShowsDropdown() {
 
   //POPULATE ALL SHOWS OPTIONS
   const arrShowsDropdown = [...allShows];
-  arrShowsDropdown.unshift({ name: "default" });
+  
   const sortedShows = arrShowsDropdown.sort((a, b) =>
     a.name < b.name ? -1 : 1
   );
+
+  sortedShows.unshift({ name: "default" });
+  console.log(arrShowsDropdown);
 
   sortedShows.forEach((show, index) => {
     const showOptions = document.createElement("option");
@@ -131,7 +135,7 @@ function allShowsDropdown() {
 
     if (index === 0) {
       showOptions.setAttribute("selected", "selected");
-      showOptions.setAttribute("label", `List all Shows... `);
+      showOptions.setAttribute("label", `List all shows`);
     }
 
     showOptions.setAttribute("value", show.name);
@@ -321,8 +325,8 @@ searchInput.addEventListener("input", (e) => {
 
 /***** ADD EVENT LISTENER TO SHOW DROPDOWN OPTIONS *****/
 showDropdownSelection.addEventListener("click", (e) => {
-  //  << -----  allShows undefined
   const selectedShowOption = showDropdownSelection.value;
+  console.log(selectedShowOption);
   const displaySelectedShows = allShows.filter((show) => {
     return show.name.includes(selectedShowOption);
   });
