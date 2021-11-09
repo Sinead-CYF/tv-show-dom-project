@@ -37,7 +37,7 @@ function setup() {
       showsAndEpisodeCounter();
       countH2.textContent = `${allEpisodes.length} / ${allEpisodes.length} Episodes`;
       createCardsWrapper();
-      // displayEpisodeCards(allEpisodes);
+      displayEpisodeCards(allEpisodes);
     })
     .catch((error) => {
       console.log("An Error Occurred:", error);
@@ -205,7 +205,6 @@ function formatShowData(seasonNum, episodeNum) {
 }
 
 /***** DISPLAY EPISODE CARDS *****/
-
 function displayEpisodeCards(episodeList) {
   cardsWrapper.innerHTML = "";
   episodeList.forEach((episode) => {
@@ -259,7 +258,7 @@ function showCards(shows) {
     //IMAGES
     const images = document.createElement("img");
     images.classList.add("images");
-    images.src = show.image.medium;
+    images.src = show.image.original;
     imgWrapper.appendChild(images);
 
     //CARD HEADER
@@ -275,8 +274,6 @@ function showCards(shows) {
     card.appendChild(cardParagraph);
   });
 }
-
-console.log(showCards());
 
 /***** ADD EVENT LISTENER TO EPISODE DROPDOWN OPTIONS *****/
 dropdownSelection.addEventListener("click", (e) => {
@@ -311,9 +308,8 @@ searchInput.addEventListener("input", (e) => {
 
 /***** ADD EVENT LISTENER TO SHOW DROPDOWN OPTIONS *****/
 showDropdownSelection.addEventListener("click", (e) => {
- 
   //  << -----  allShows undefined
-  const selectedShowOption = dropdownSelection.value;
+  const selectedShowOption = showDropdownSelection.value;
   const displaySelectedShows = allShows.filter((show) => {
     return show.name.includes(selectedShowOption);
   });
