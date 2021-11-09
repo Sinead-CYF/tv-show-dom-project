@@ -122,21 +122,20 @@
   font-family: var(--main-heading);
 }
 
-/***** CARDS WRAPPER *****/
+/***** EPISODES CARDS WRAPPER *****/
 .cards-wrapper {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
   margin: 0 auto;
+  margin-bottom: 1rem;
   height: auto;
   width: 90%;
   padding: 1.5rem;
-  box-shadow: darkorchid 0px 4px 8px -2px,
-  rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
-    
+  box-shadow: darkorchid 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
 }
 
-/***** CARDS *****/
+/***** EPISODE CARDS *****/
 .card {
   height: auto;
   width: 20%;
@@ -144,8 +143,7 @@
   margin-bottom: 2rem;
   border-radius: 4px;
   background-color: white;
-  box-shadow: darkorchid 0px 4px 8px -2px,
-    rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+  box-shadow: darkorchid 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
 }
 
 .card:hover {
@@ -184,3 +182,87 @@
   text-align: center;
 }
 
+/***** SHOW CARDS *****/
+
+.show-card {
+  display: flex;
+  gap: 0.8rem;
+  /* border: 1px solid purple; */
+}
+
+.show-img-wrapper {
+  /* border: 1px solid orange; */
+}
+
+.show-text-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.8rem;
+  /* border: 3px solid yellow; */
+}
+
+.show-card-header {
+  font-size: 3rem;
+  /* border: 1px solid red; */
+  text-align: center;
+  background-color: lightgrey;
+}
+
+.show-card-paragraph-wrapper {
+  font-size: 1.5rem;
+  /* border: 1px solid green; */
+  margin-top: 1rem;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 7;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.show-link {
+  color: black;
+  text-decoration: none;
+  font-weight: bolder;
+  text-align: center;
+  /* border: 1px solid magenta; */
+}
+
+.show-link:hover {
+  transform: scale(1.5);
+  /* transform-origin: left; */
+  transition: transform 0.3s ease-in;
+}
+
+@media screen and (max-width: 560px) {
+  .show-card {
+    flex-direction: column;
+    justify-content: space-around;
+  }
+
+  .show-text-wrapper {
+    align-self: center;
+  }
+
+  .show-img-wrapper {
+    align-self: center;
+  }
+
+  .show-card-header {
+    font-size: 2rem;
+    display: none;
+  }
+
+  .show-card-paragraph-wrapper {
+    font-size: 1rem;
+    margin-top: 0;
+  }
+
+  .show-link {
+    align-items: flex-end;
+  }
+
+  .cards-wrapper {
+    margin-bottom: 1rem;
+  }
+}
