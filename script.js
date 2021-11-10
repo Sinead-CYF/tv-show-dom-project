@@ -15,6 +15,7 @@ const showDropdownWrapper = document.createElement("form");
 /***** ALL SHOWS API *****/
 const allShows = getAllShows();
 console.log(allShows);
+// const allShows_URL: "https://api.tvmaze.com/shows"
 
 /***** ON SETUP *****/
 window.onload = setup;
@@ -221,6 +222,7 @@ showDropdownSelection.addEventListener("click", (e) => {
   episodes_API = `https://api.tvmaze.com/shows/${selectedShow}/episodes`;
   console.log(selectedShow);
   console.log(episodes_API);
+
   const displaySelectedShows = allShows.filter((show) => {
     return selectedShow == show.id;
   });
@@ -345,5 +347,3 @@ searchInput.addEventListener("input", (e) => {
   // displayEpisodeCards(filteredEpisodes);
   // counterText(filteredEpisodes);
 });
-
-/****************************************************************************************/
