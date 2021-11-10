@@ -34,6 +34,7 @@ function setup() {
 }
 
 /***** EPISODES API *****/
+let selectedShow;
 let episodes_API = `https://api.tvmaze.com/shows/22/episodes`;
 let allEpisodes;
 console.log(allEpisodes); // << undefined
@@ -238,9 +239,9 @@ showDropdownSelection.addEventListener("click", (e) => {
 
 /***** EVENT LISTENER - EPISODE DROPDOWN OPTIONS *****/
 dropdownSelection.addEventListener("click", (e) => {
-  showValue = dropdownSelection.value;
+  let selectedEpisode = dropdownSelection.value;
   const displaySelected = allEpisodes.filter((episode) => {
-    return episode.name.includes(showValue);
+    return episode.name.includes(selectedEpisode);
   });
 
   if (dropdownSelection.value === "default") {
