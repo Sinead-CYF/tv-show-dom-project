@@ -239,25 +239,7 @@ showDropdownSelection.addEventListener("click", (e) => {
   }
 });
 
-/***** EVENT LISTENER - EPISODE DROPDOWN OPTIONS *****/
-dropdownSelection.addEventListener("click", (e) => {
-  let selectedEpisode = dropdownSelection.value;
-  const displaySelected = allEpisodes.filter((episode) => {
-    return episode.name.includes(selectedEpisode);
-  });
 
-  if (dropdownSelection.value === "default") {
-    displayEpisodeCards(allEpisodes);
-  } else {
-    displayEpisodeCards(displaySelected);
-  }
-
-  episodeCount(allEpisodes, allEpisodes);
-
-  if (dropdownSelection.value !== "default") {
-    episodeCount(displaySelected, allEpisodes);
-  }
-});
 
 /***** POPULATE EPISODE OPTIONS *****/
 function allEpisodesDropdown() {
@@ -327,6 +309,26 @@ function displayEpisodeCards(episodeList) {
     card.appendChild(cardParagraph);
   });
 }
+
+/***** EVENT LISTENER - EPISODE DROPDOWN OPTIONS *****/
+dropdownSelection.addEventListener("click", (e) => {
+  let selectedEpisode = dropdownSelection.value;
+  const displaySelected = allEpisodes.filter((episode) => {
+    return episode.name.includes(selectedEpisode);
+  });
+
+  if (dropdownSelection.value === "default") {
+    displayEpisodeCards(allEpisodes);
+  } else {
+    displayEpisodeCards(displaySelected);
+  }
+
+  episodeCount(allEpisodes, allEpisodes);
+
+  if (dropdownSelection.value !== "default") {
+    episodeCount(displaySelected, allEpisodes);
+  }
+});
 
 /***** ADD EVENT LISTENER TO SEARCH BAR *****/
 searchInput.addEventListener("input", (e) => {
