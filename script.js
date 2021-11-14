@@ -11,6 +11,9 @@ const searchBarWrapper = document.createElement("section");
 const counterWrapper = document.createElement("div");
 const countH2 = document.createElement("h2");
 const showDropdownWrapper = document.createElement("form");
+const dropdownWrapper = document.createElement("form");
+
+
 
 /***** ALL SHOWS API *****/
 const allShows = getAllShows();
@@ -26,7 +29,7 @@ function setup() {
   createTvMazeLink();
   searchAreaWrapper();
   allShowsDropdown();
-  allEpisodesDropdown();
+  // createEpisodeDropdown();
   searchBar();
   showsAndEpisodeCounter();
   showCount(allShows, allShows);
@@ -36,26 +39,28 @@ function setup() {
 
 /***** EPISODES API *****/
 let selectedShow;
-let episodes_API = `https://api.tvmaze.com/shows/22/episodes`;
-let allEpisodes;
+// let episodes_API = `https://api.tvmaze.com/shows/22/episodes`;
+let allEpisodes = [];
 console.log(allEpisodes); // << undefined
 
-// function getEpisodeData(showId) {
-// << doesn't work as a function can't find allEpisodes array
-fetch(episodes_API)
-  .then((response) => {
-    if (response.ok) {
-      return response.json();
-    }
-    throw `${response.status} ${response.statusText}`;
-  })
-  .then((data) => {
-    allEpisodes = data; // << not iterable as a function
-  })
-  .catch((error) => {
-    console.log("An Error Occurred:", error);
-  });
-// }
+function getEpisodeData(showId) {
+  const episodes_API = `https://api.tvmaze.com/shows/${showId}/episodes`;
+  console.log(episodes_API);
+  return fetch(episodes_API)
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+      throw `${response.status} ${response.statusText}`;
+    })
+    .then((data) => {
+      allEpisodes = data;
+      console.log(allEpisodes);
+    })
+    .catch((error) => {
+      console.log("An Error Occurred:", error);
+    });
+}
 
 /***** PAGE TITLE *****/
 function pageTitle() {
@@ -95,7 +100,7 @@ function searchAreaWrapper() {
 function searchBar() {
   searchInput.classList.add("search-input");
   searchInput.type = "text";
-  searchInput.setAttribute("placeholder", "Search");
+  searchInput.setAttribute("placeholder", "Search Shows");
   searchInput.setAttribute("Name", "searchBar");
   searchInput.setAttribute("label", "search-episodes");
   searchBarWrapper.appendChild(searchInput);
@@ -185,9 +190,12 @@ function showCards(shows) {
 
     //IMAGES
     const images = document.createElement("img");
+
+    if (show.image !== null) {
     images.classList.add("show-images");
     images.src = show.image.medium;
     imgWrapper.appendChild(images);
+    }
 
     //TITLE & PARAGRAPH WRAPPER
     const showTextWrapper = document.createElement("div");
@@ -217,11 +225,9 @@ function showCards(shows) {
 }
 
 /***** EVENT LISTENER - SHOW DROPDOWN OPTIONS *****/
-showDropdownSelection.addEventListener("click", (e) => {
+showDropdownSelection.addEventListener("change", async (e) => {
   selectedShow = showDropdownSelection.value;
-  episodes_API = `https://api.tvmaze.com/shows/${selectedShow}/episodes`;
   console.log(selectedShow);
-  console.log(episodes_API);
 
   const displaySelectedShows = allShows.filter((show) => {
     return selectedShow == show.id;
@@ -230,28 +236,32 @@ showDropdownSelection.addEventListener("click", (e) => {
   if (showDropdownSelection.value === "default") {
     showCards(allShows);
   } else {
+    await getEpisodeData(selectedShow);
     showCards(displaySelectedShows);
   }
 
   if (showDropdownSelection.value !== "default") {
     showCount(displaySelectedShows, allShows);
+    populateEpisodeOptions();
+    createEpisodeDropdown();
     // showDropdownWrapper.style.display = "none";
   }
 });
 
-
-
-/***** POPULATE EPISODE OPTIONS *****/
-function allEpisodesDropdown() {
-  const dropdownWrapper = document.createElement("form");
+function createEpisodeDropdown () {
+  
   dropdownWrapper.classList.add("dropdown-form");
   dropdownSelection.classList.add("dropdown-selector");
+  dropdownSelection.id = "episode-dropdown";
   dropdownSelection.setAttribute("name", "dropdown-selection");
   dropdownSelection.setAttribute("label", "select-episode");
   searchBarWrapper.appendChild(dropdownWrapper);
   dropdownWrapper.appendChild(dropdownSelection);
+}
 
-  //POPULATE EPISODE OPTIONS FROM ARRAY - FORMATTED SEASON & EPISODE NUM
+/***** POPULATE EPISODE OPTIONS *****/
+function populateEpisodeOptions() {
+  const dropDownSelection = document.getElementById("episode-dropdown");
   const arrDropdown = [...allEpisodes];
   arrDropdown.unshift({ name: "default" });
 
@@ -289,9 +299,11 @@ function displayEpisodeCards(episodeList) {
 
     //IMAGES
     const images = document.createElement("img");
+    if (episode.image.medium !== null){
     images.classList.add("images");
     images.src = episode.image.medium;
     imgWrapper.appendChild(images);
+    }
 
     //CARD HEADER
     const cardHeader = document.createElement("h2");
@@ -307,6 +319,11 @@ function displayEpisodeCards(episodeList) {
     cardParagraph.classList.add("card-paragraph-wrapper");
     cardParagraph.innerHTML = episode.summary;
     card.appendChild(cardParagraph);
+
+    if (episode.summary === "") {
+      cardParagraph.classList.add("paragraph-filler");
+    }
+    
   });
 }
 
@@ -316,9 +333,11 @@ dropdownSelection.addEventListener("click", (e) => {
   const displaySelected = allEpisodes.filter((episode) => {
     return episode.name.includes(selectedEpisode);
   });
+  
 
   if (dropdownSelection.value === "default") {
     displayEpisodeCards(allEpisodes);
+    // showCards(allShows);
   } else {
     displayEpisodeCards(displaySelected);
   }
@@ -338,7 +357,7 @@ searchInput.addEventListener("input", (e) => {
     // || show.summary.toLowerCase().includes(searchValue)
   });
   showCards(filteredShows);
-  counterText(filteredShows);
+  showCount(filteredShows, allShows);
 
   // let filteredEpisodes = allEpisodes.filter((episode) => {
   //   return (

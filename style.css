@@ -17,13 +17,6 @@
   background-color: white;
 }
 
-/***** PROJECT TITLE *****/
-.title-wrapper {
-  width: 90%;
-  margin: 0 auto;
-  text-align: center;
-  background-color: rgb(218, 197, 238);
-}
 
 /***** SHOW TITLE *****/
 .show-title-wrapper {
@@ -86,7 +79,6 @@
   flex-grow: 1;
   min-width: 260px;
   margin-bottom: 0.2rem;
-  /* border: 1px solid green; */
 }
 
 .dropdown-selector {
@@ -105,7 +97,6 @@
   flex-grow: 2;
   min-width: 260px;
   border-radius: 5px;
-  margin-bottom: 0.2rem;
 }
 
 /***** EPISODE COUNTER *****/
@@ -183,6 +174,10 @@
   width: 95%;
   margin: 0.2rem auto;
   text-align: center;
+}
+
+.paragraph-filler {
+  height: 6rem;
 }
 
 /***** SHOW CARDS *****/
