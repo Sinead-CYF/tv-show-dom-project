@@ -1,13 +1,22 @@
-# TV Show DOM Project
+# React - Country Flags Display 
 
-A starting point for CYF's TV show DOM project
+<p align="center">
+  <img src="https://i.ibb.co/m5tWxfb/banner.jpg" alt="banner">
+</p>
 
-The requirements for the project are here:
+### Aims: :dart:
 
-https://syllabus.codeyourfuture.io/js-core-3/tv-show-dom-project/readme
+Create a React app to integrate with a "countries" REST API, and to fetch country data and display it like in the designs provided by frontendmentor.io.
 
-## Solution
+### Tools: :toolbox:
 
-The solution to this project will be given to you after you have completed it. You will be able to find the solution here
+- React Props
+- Array.map 
+- React JSX
+- Flexbox
+- CSS 
 
-https://github.com/CodeYourFuture/tv-show-dom-project-solution
+### Room for improvement: :balance_scale:
+
+- Finnish Toggle Dark-Mode
+- Make all images uniform 
